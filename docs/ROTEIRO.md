@@ -31,7 +31,7 @@ Commit: `Adiciona esqueleto semântico e tokens de design`
 
 **Teste (você, no navegador):**
 - [ ] Aba anônima: cortina com o nome desde o 1º quadro; beija-flor vira o logo sem troca visível
-- [ ] Recarregar: sem abertura e sem "piscada"
+- [ ] Recarregar: a abertura roda de novo (toda visita), sem "piscada" do site antes da cortina
 - [ ] `?intro` roda de novo; `?intro=0.25` em câmera lenta
 - [ ] DevTools › Rendering › prefers-reduced-motion: reduce → não roda; menu troca sem animar
 - [ ] DevTools › Performance › CPU 4x: animação sem engasgos

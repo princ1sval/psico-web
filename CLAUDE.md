@@ -41,7 +41,7 @@ A pasta `kit-abertura-maria-luiza/` tem a abertura "o beija-flor puxa a cortina"
 
 Atributos que ligam tudo: `data-abertura-logo` (SVG do logo, destino do FLIP), `data-abertura-sobe` (elementos do topo que sobem quando a cortina passa), `data-menu` no `<header>`, `data-menu-flip` no logo+nome, `data-menu-flip="fim"` no grupo links+WhatsApp.
 Ajustes: constantes `T` e `M` em `abertura.js`; variáveis `--ab-*` (cortina) e `--menu-*` (menu). **Não mude tempos e medidas sem perguntar.**
-Comportamento esperado: roda só na 1ª visita (`localStorage ml-abertura-vista`); `?intro` força; `?intro=0.25` = câmera lenta; não roda com reduzir movimento, com link de seção (`#duvidas`) ou em aba de segundo plano; clique/toque/rolagem/tecla pula; se o JS quebrar, o CSS remove a camada aos 4 s.
+Comportamento esperado: roda **em toda visita e a cada recarregamento** (decisão do João: o trecho 1 inline no `index.html` foi adaptado e não usa mais a flag `ml-abertura-vista` do kit, nem localStorage); `?intro` força (inclusive com `#seção`); `?intro=0.25` = câmera lenta; não roda com reduzir movimento, com link de seção (`#duvidas`) ou em aba de segundo plano; clique/toque/rolagem/tecla pula; se o JS quebrar, o CSS remove a camada aos 4 s.
 
 ## Regras éticas do CFP — valem para TODO texto do site
 - Nome completo + "Psicóloga" + **número do CRP** visíveis (hero e rodapé).

@@ -2,50 +2,235 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <!-- Fase 2: trechos 1 e 2 do kit entram aqui, inline, antes de qualquer CSS externo -->
+  <!-- Kit, trecho 1 — ADAPTADO: a abertura roda em TODA visita (o kit original rodava só na 1ª,
+       com a flag ml-abertura-vista no localStorage; a flag foi removida a pedido) -->
+  <script>
+    /* ABERTURA — decide, antes do primeiro paint, se a animação roda.
+       Põe a classe .intro no <html>; o CSS e o JS da abertura só agem com ela. */
+    (function () {
+      var html = document.documentElement;
+      var forcar = /[?&]intro(?:[=&]|$)/.test(location.search); // ?intro força (e ?intro=0.25 = câmera lenta)
+      try {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; // movimento reduzido: nunca roda
+        if (!forcar) {
+          if (location.hash) return;                         // chegou por link de seção (#duvidas…)
+          if (document.visibilityState === 'hidden') return; // aberta em aba de fundo
+        }
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; // começa no topo
+        html.classList.add('intro');
+      } catch (e) { /* navegador sem suporte: não roda */ }
+    })();
+  </script>
+  <!-- Kit, trecho 2 — fonte do nome auto-hospedada (pré-carregada) no lugar do Google Fonts;
+       o @font-face fica em css/base.css. CSS da camada sem alterações. -->
+  <link rel="preload" href="assets/fonts/cormorant-garamond-latin-wght-italic.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+  /* ==========================================================================
+     ABERTURA — camada por cima do site (CSS inline no <head>)
+     Só vale com html.intro. Sem a classe, a camada nem aparece.
+     ========================================================================== */
+  :root {
+    --ab-cortina: #F8FAF1;   /* cor da cortina (off-white) */
+    --ab-traco: #3D4530;     /* traço do beija-flor e cor do nome (verde-oliva) */
+    --ab-fio: #CDD3B6;       /* fio da borda: verde-sálvia (um tom acima do #DDE1C8 para aparecer sobre o off-white) */
+    --ab-sombra: #3D4530;    /* cor da sombra da borda (bem transparente, ver opacidades no HTML) */
+    --ab-fonte-nome: "Cormorant Garamond", "Cormorant", Garamond, Georgia, serif;
+    --ab-tamanho-nome: clamp(2.6rem, 2rem + 4vw, 5.6rem);
+    --ab-espera: 4s;         /* rede de segurança: se o JS falhar, a camada some sozinha depois disso */
+  }
+
+  #abertura { display: none; }
+
+  html.intro #abertura {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    overflow: hidden;
+    contain: strict;
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    /* linear no total, para o último quadro ser exato (visibility: hidden de verdade) */
+    animation: ab-seguranca .35s linear var(--ab-espera) forwards;
+  }
+
+  #abertura svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    will-change: transform; /* cada SVG numa camada própria da GPU */
+  }
+
+  .ab-tecido { fill: var(--ab-cortina); }
+  .ab-fio { fill: none; stroke: var(--ab-fio); stroke-width: 1.25px; stroke-linejoin: round; }
+  .ab-sombra path { fill: none; stroke: var(--ab-sombra); stroke-linejoin: round; }
+
+  .ab-nome {
+    fill: var(--ab-traco);
+    font-family: var(--ab-fonte-nome);
+    font-style: italic;
+    font-weight: 300;
+    font-size: var(--ab-tamanho-nome);
+    letter-spacing: .01em;
+    transition: opacity .25s cubic-bezier(.16, 1, .3, 1);
+  }
+  #abertura.ab-esperando-fonte .ab-nome { opacity: 0; } /* nunca mostra a fonte reserva trocando no meio */
+
+  .ab-passaro path {
+    fill: none;
+    stroke: var(--ab-traco);
+    stroke-width: 1.5px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke; /* o traço fica com 1,5 px em qualquer tamanho */
+  }
+  .ab-rastro { fill: none; stroke-width: 1.5px; stroke-linecap: round; stroke-dasharray: 0 5; }
+
+  /* O logo do menu já ocupa o lugar, invisível, até o beija-flor pousar nele */
+  html.intro [data-abertura-logo] {
+    visibility: hidden;
+    animation: ab-logo-volta .35s ease-out var(--ab-espera) forwards;
+  }
+
+  /* Rede de segurança: some com fade e deixa de existir para o clique.
+     O "hidden" entra em 97% e fica até o fim: no Chrome, com atraso de 4 s, o progresso final
+     pode parar em 0,999999… (arredondamento) e um hidden só no 100% nunca seria aplicado. */
+  @keyframes ab-seguranca {
+    0%   { opacity: 1; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+    96%  { opacity: 0; visibility: visible; }
+    97%, 100% { opacity: 0; visibility: hidden; pointer-events: none; }
+  }
+  @keyframes ab-logo-volta {
+    from { visibility: visible; opacity: 0; }
+    to   { visibility: visible; opacity: 1; }
+  }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Maria Luiza Gonçalves Milani · Psicóloga em Muriaé-MG</title>
   <meta name="description" content="Psicoterapia com escuta orientada pela psicanálise, para crianças, adolescentes, adultos e idosos. Atendimento online ou presencial em Muriaé-MG.">
   <meta name="theme-color" content="#F8FAF1">
   <link rel="preload" href="assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Kit, trecho 8 — favicons na raiz -->
+  <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/secoes.css">
 </head>
 <body>
-  <!-- Fase 2: camada da abertura (trecho 3 do kit) entra aqui -->
+  <!-- Kit, trecho 3 — ABERTURA: camada por cima do site (logo no início do <body>) -->
+  <div id="abertura" aria-hidden="true">
+    <svg class="ab-pano" focusable="false">
+      <defs>
+        <clipPath id="ab-corte">
+          <rect class="ab-inicial" width="100%" height="100%"/>
+          <path data-borda/>
+        </clipPath>
+      </defs>
+      <!-- sombra suave da borda: traços do mesmo path, do mais largo/claro ao mais estreito/escuro (sem filtro de blur) -->
+      <g class="ab-sombra" transform="translate(0 1.5)">
+        <path data-borda stroke-width="36" stroke-opacity="0.006"/>
+        <path data-borda stroke-width="28" stroke-opacity="0.008"/>
+        <path data-borda stroke-width="22" stroke-opacity="0.01"/>
+        <path data-borda stroke-width="17" stroke-opacity="0.012"/>
+        <path data-borda stroke-width="13" stroke-opacity="0.015"/>
+        <path data-borda stroke-width="9" stroke-opacity="0.018"/>
+        <path data-borda stroke-width="6" stroke-opacity="0.022"/>
+        <path data-borda stroke-width="3" stroke-opacity="0.03"/>
+      </g>
+      <rect class="ab-tecido ab-inicial" width="100%" height="100%"/>
+      <path class="ab-tecido" data-borda/>
+      <g clip-path="url(#ab-corte)">
+        <g class="ab-nome-grupo">
+          <text class="ab-nome" x="50%" y="50%" text-anchor="middle" dominant-baseline="central">Maria Luiza</text>
+        </g>
+      </g>
+      <path class="ab-fio" data-borda/>
+    </svg>
+    <svg class="ab-ceu" focusable="false">
+      <defs>
+        <linearGradient id="ab-rastro-cor" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stop-color="#3D4530" stop-opacity="0"/>
+          <stop offset=".78" stop-color="#3D4530" stop-opacity=".62"/>
+          <stop offset="1" stop-color="#3D4530" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path class="ab-rastro" stroke="url(#ab-rastro-cor)"/>
+      <g class="ab-passaro" transform="translate(-999 -999)">
+        <g class="ab-asa-tras">
+          <path data-pose="alta" d="M52.2 46.4 C48.6 35.8 39.2 23.0 26.8 15.8 C34.8 25.8 41.8 37.4 46.6 50.2"/>
+          <path data-pose="meia" d="M52.2 46.4 C45.2 37.6 31.4 28.6 14.6 24.6 C28.0 31.0 39.6 39.6 46.6 50.2" style="opacity:0"/>
+          <path data-pose="baixa" d="M52.2 46.4 C42.6 44.0 27.0 44.6 11.6 49.8 C26.4 48.8 38.8 49.0 46.6 50.2" style="opacity:0"/>
+        </g>
+        <path d="M69.0 42.4 C68.6 37.4 62.8 34.8 59.0 37.6 C55.0 40.6 53.4 46.4 50.4 51.6 C47.6 56.4 43.4 60.6 39.2 63.6"/>
+        <path d="M68.4 45.4 C67.6 52.4 61.0 60.0 52.8 62.4 C48.6 63.6 44.6 64.4 41.0 65.2"/>
+        <path d="M69.0 43.2 Q82.0 45.4 95.0 50.6"/>
+        <path d="M40.0 64.4 C35.4 70.4 31.4 75.6 27.4 79.8 M40.0 64.4 C37.6 71.8 35.4 77.6 33.2 83.4"/>
+        <g class="ab-asa-frente">
+          <path data-pose="alta" d="M55.8 43.6 C56.8 30.6 52.6 15.2 44.4 5.6 C47.2 18.4 48.8 32.4 50.8 47.4"/>
+          <path data-pose="meia" d="M55.8 43.6 C52.4 32.8 41.8 20.4 26.6 12.6 C36.6 22.2 45.2 33.6 50.8 47.4" style="opacity:0"/>
+          <path data-pose="baixa" d="M55.8 43.6 C47.6 38.4 32.4 34.4 14.8 35.8 C30.4 38.8 43.4 42.6 50.8 47.4" style="opacity:0"/>
+        </g>
+      </g>
+    </svg>
+  </div>
 
   <a class="pular-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <!-- Header provisório: na Fase 2 vira o header do kit (trecho 7), com data-menu -->
-  <header class="container">
-    <a href="#topo">Maria Luiza</a>
-    <nav aria-label="Seções">
-      <ul>
-        <li><a href="#sobre">Sobre</a></li>
-        <li><a href="#trajetoria">Trajetória</a></li>
-        <li><a href="#abordagem">Abordagem</a></li>
-        <li><a href="#como-funciona">Como funciona</a></li>
-        <li><a href="#duvidas">Dúvidas</a></li>
-      </ul>
-    </nav>
-    <a href="#contato">Conversar no WhatsApp</a>
+  <!-- Kit, trecho 7 — header. data-menu no <header>; data-menu-flip nas peças que deslizam;
+       data-abertura-logo no SVG onde o beija-flor pousa; data-abertura-sobe no que sobe com a cortina -->
+  <header class="menu" data-menu>
+    <div class="menu__contorno" aria-hidden="true"></div>
+    <div class="menu__fundo" aria-hidden="true"></div>
+    <div class="menu__barra">
+      <a class="menu__marca" href="#topo" data-menu-flip aria-label="Maria Luiza — início">
+        <svg class="menu__logo" data-abertura-logo viewBox="0 0 100 100" overflow="visible" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M52.2 46.4 C48.6 35.8 39.2 23.0 26.8 15.8 C34.8 25.8 41.8 37.4 46.6 50.2"/>
+            <path vector-effect="non-scaling-stroke" d="M69.0 42.4 C68.6 37.4 62.8 34.8 59.0 37.6 C55.0 40.6 53.4 46.4 50.4 51.6 C47.6 56.4 43.4 60.6 39.2 63.6"/>
+            <path vector-effect="non-scaling-stroke" d="M68.4 45.4 C67.6 52.4 61.0 60.0 52.8 62.4 C48.6 63.6 44.6 64.4 41.0 65.2"/>
+            <path vector-effect="non-scaling-stroke" d="M69.0 43.2 Q82.0 45.4 95.0 50.6"/>
+            <path vector-effect="non-scaling-stroke" d="M40.0 64.4 C35.4 70.4 31.4 75.6 27.4 79.8 M40.0 64.4 C37.6 71.8 35.4 77.6 33.2 83.4"/>
+            <path vector-effect="non-scaling-stroke" d="M55.8 43.6 C56.8 30.6 52.6 15.2 44.4 5.6 C47.2 18.4 48.8 32.4 50.8 47.4"/>
+          </g>
+        </svg>
+        <span class="menu__nome" data-abertura-sobe>Maria Luiza</span>
+      </a>
+      <div class="menu__direita" data-menu-flip="fim">
+        <nav class="menu__links" aria-label="Seções" data-abertura-sobe>
+          <a href="#sobre">Sobre</a>
+          <a href="#trajetoria">Trajetória</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#duvidas">Dúvidas</a>
+        </nav>
+        <!-- [[PENDENTE: trocar #contato por https://wa.me/55NUMERO?text=... quando chegar o número]] -->
+        <a class="menu__whats" href="#contato" data-abertura-sobe>WhatsApp</a>
+      </div>
+    </div>
   </header>
 
   <main id="conteudo" tabindex="-1">
 
     <!-- ===================== INÍCIO ===================== -->
-    <section id="topo" class="secao" aria-labelledby="topo-titulo">
+    <section id="topo" class="secao topo" aria-labelledby="topo-titulo">
       <div class="container fluxo">
-        <p><span class="pendente">[[PENDENTE: confirmar textos do topo com a Malu (vindos do esboço)]]</span></p>
-        <p><strong>Maria Luiza Gonçalves Milani</strong></p>
-        <p class="sobretitulo">Psicóloga · CRP 04/<span class="pendente">[[PENDENTE: número do CRP]]</span></p>
-        <h1 id="topo-titulo">Um lugar para ser e estar <em>como você quiser</em></h1>
-        <p>Psicoterapia com escuta orientada pela psicanálise, para crianças, adolescentes, adultos e idosos. Online ou presencial em Muriaé-MG.</p>
-        <p>
+        <p data-abertura-sobe><span class="pendente">[[PENDENTE: confirmar textos do topo com a Malu (vindos do esboço)]]</span></p>
+        <p data-abertura-sobe><strong>Maria Luiza Gonçalves Milani</strong></p>
+        <p class="sobretitulo" data-abertura-sobe>Psicóloga · CRP 04/<span class="pendente">[[PENDENTE: número do CRP]]</span></p>
+        <h1 id="topo-titulo" data-abertura-sobe>Um lugar para ser e estar <em>como você quiser</em></h1>
+        <p data-abertura-sobe>Psicoterapia com escuta orientada pela psicanálise, para crianças, adolescentes, adultos e idosos. Online ou presencial em Muriaé-MG.</p>
+        <p data-abertura-sobe>
           <a href="#contato">Conversar no WhatsApp</a>
           <span class="pendente">[[PENDENTE: número do WhatsApp e mensagem pré-preenchida]]</span>
         </p>
-        <p><a href="#abordagem">Conhecer a abordagem</a></p>
-        <p><span class="pendente">[[PENDENTE: foto profissional do topo (vertical, boa resolução)]]</span></p>
+        <p data-abertura-sobe><a href="#abordagem">Conhecer a abordagem</a></p>
+        <p data-abertura-sobe><span class="pendente">[[PENDENTE: foto profissional do topo (vertical, boa resolução)]]</span></p>
       </div>
     </section>
 
@@ -256,6 +441,8 @@
     </div>
   </footer>
 
-  <!-- Fase 2: js/abertura.js e js/menu.js entram aqui -->
+  <!-- Kit, trechos 4 e 6 — abertura e menu (nesta ordem) -->
+  <script src="js/abertura.js"></script>
+  <script src="js/menu.js"></script>
 </body>
 </html>
