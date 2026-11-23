@@ -1,0 +1,10 @@
+// Publicação no Cloudflare (Worker só com arquivos estáticos, sem build).
+// Publica a raiz do repositório, MENOS o que está listado em .assetsignore
+// (docs internos, CLAUDE.md, kit original, configurações).
+{
+  "name": "psico-web",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "."
+  }
+}
