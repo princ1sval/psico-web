@@ -1,0 +1,1336 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<script>
+  /* ABERTURA — decide, antes do primeiro paint, se a animação roda.
+     Põe a classe .intro no <html>; o CSS e o JS da abertura só agem com ela. */
+  (function () {
+    var html = document.documentElement;
+    var CHAVE = 'ml-abertura-vista';                         // flag da 1ª visita no localStorage
+    var forcar = /[?&]intro(?:[=&]|$)/.test(location.search); // ?intro força (para testar e mostrar)
+    try {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; // movimento reduzido: nunca roda
+      if (!forcar) {
+        if (localStorage.getItem(CHAVE)) return;           // já viu a abertura
+        if (location.hash) return;                         // chegou por link de seção (#contato…)
+        if (document.visibilityState === 'hidden') return; // aberta em aba de fundo
+        localStorage.setItem(CHAVE, '1');
+      }
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; // começa no topo
+      html.classList.add('intro');
+    } catch (e) { /* sem localStorage: não roda, para não repetir a cada visita */ }
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maria Luiza · Psicologia — demonstração da abertura</title>
+<meta name="theme-color" content="#F8FAF1">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAGTklEQVR4AaxWC1CVRRT+9od7L9gVcpIbis8GlfGRiIzO1JRJOvgYJFFDGV+oKWOjpiCKTwpLHBAlyRktx0rTFBUhCWkoKU3AJ2pjNT7iNYqKDlwucB9wt7OL9/KWR+3s2XPOnsee3T1n/19BBxvnXGOs1U+rMVccMprLr9WYyosIVxNUEV1I+KqU1eoDSFfVQbdoNwDOy3sYTeVxJktFGaw8lQFzATaKMdaXsDNBN6L7EfaRMitPI90nwkbYop3WZgC0C7XRol9jsuBeQVFBxKKw+drMrLPtuLOJmSsYixC2RnPFauHLJmmOWw2ADFxMlooMcL4TYD0uXDyP4uIi7N4Th/sF99DxxnqQboLJrD8ufBLdorcIwMj1Q8jgEsD88Lz160OnTXRtbS22xUbDYrEQ14nOEEg+80xc79XcqkkAev2DnmdST2dnZv04pLHiIM/BdlacREZmup3vMMHgxc08lfNKt8Y29gA456or+fnZiV8kuMfv3oHIjWvwpOyJ1O3VywMqVUNiJ6d8T7fDpaxTA8Ngo8WaItay2dkDMNdWhPv6+A7r3dtDyq7nX8XS5aHIPn9O8gP6D5RYDKWlD5GT97sgOw0MeFOsZTOUAYhj4Rwb1GoNotZuoQQmNdIwVFXiU7rzE6eOoX/f/jTT0E+eTm5gOknRWlG0pk6YyQBMFh4DsO6g5jXYCyHBVOpE2/q+A3tRY6yxsRLfvJWPmppqSXd+YFRl/BNhp9B9uAI8VDA2mBeyEK8N9LSxEufktDzyQipNKezSwBeKtRVzXeV4slcT2LuDgyM2Rm6Go6Ojfa6OW+20jSguKbSRXcEasbZCfie1Zt2v3wAsmLuoQVSfFg08Ueeyf8am6HXYu38PRGLSVKe6WFvh4N5tWc0KCobO7VUpZmAAl6R9uHQ1F3mXc5GSegLLVizu5Csp3HFvhQra3e6xGSGuIihwpn2Ws2YREPteQBB6vuKGqioDDhzcj9JHpXb9dgnO3RXGWJsBCAeT/afC2bmbINF8/TGjx+LDsFXQ6V4F+cGlK7mYtygYs+fNQMz2rUjPSIO+Ui9tWxvIxl1pTdB4rlu3lxAwJVBOcbqFeoJDrVZjedhKycoSpeImh5J/+qwMv13Ixu6knZgVEoiozREQX9Lq6iopbxi4UaFSaPfMAumYHRQHcWkElDUUSPiqdejj0RdV1QYUFRaAjgDrIzYhPjaRkncxvEf6QNhYrVZcuXYZ8bu2Y86CWSgpKYa9cVaqkGG7AejcdJgeOIPsaGXGMMTTC37vTCAeOHLsMOqsdZIe4zsWI0d4Y+6c+Yj7bBdSktOxeX00Jvr5Q6vVyoeLMfIhtWkvjJcqDCz/Od8mEguUPCihWCHfhtWr1krdX+k7cer5kzydklWrlY+plInB2ckZb781HpHhG3DiaBq+/eooPDz6CJEEBuUvhSl44W+OSKLwyJXIzbtIBcPxftBs3Lnzt6z/bbHRqKV/BHHcH4SG4UVNXIe7e6+mKoyfVtQO3cXnztRUUs8ZDJVYsGQO/rh9C+IuNRoNjhw/jITP42T9Cy3/iVMQGxPX5HMt5jsAZo2jyy8KY6wCYF+jlZZ+9gcYDAY6eibBbDZLLbEbv3ETsCsuCREfrYMDPd1S0KmBHWSMmRVho1Ep0YSNBPb+T+F9HDryjeSpUuD9+igsCV2GxJ17kXYyA1H0rRg+dISUd2EwalRsi7BTxMCYVlTCPkELMNCrtjVmI0ym+phEFsdTeQXPDMFQr2FQ03+D0OsycJ7IWPfHwl4GIAiNyoUi4jdFxovFHz58IKYljB/3rsT/x0Cvd65G7fqxzZc9ALoPvUalnpqYlGAQPxs2BS3V72gfXxv73zDHXScVC2CM2f9u7AEIz29M8q3OyDyjFbQNxlEddy3JbB7qMe28DGpMZsylrH6mfmwSQE7m7WdU7EkatTq5Xgz4Ubbb6K5jnkU793Jirneb+2gSgBCez7qxotL6bAll/lmdTvfn8GEjH4n5rgDt+jEHW6pRufrTzp+25qNFAEIpL+Ou/kLWjcknv/tpqLPGdRCdyg56uQ1C1jHgFcLGSeXi6ax2+ZLu3NqWXasBNFYm40onzcvraRc9obBpHDhMwVyjEyoiTL/FvIboYqKvS5nCAknXTdgI28a+WqP/BQAA///HZBG8AAAABklEQVQDAKNlfWfu5ycOAAAAAElFTkSuQmCC" sizes="32x32" type="image/png">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjE3LjkgMS41IDg2IDg2Ij4KICA8c3R5bGU+CiAgICBwYXRoIHsgZmlsbDogbm9uZTsgc3Ryb2tlOiAjM0Q0NTMwOyBzdHJva2Utd2lkdGg6IDY7IHN0cm9rZS1saW5lY2FwOiByb3VuZDsgc3Ryb2tlLWxpbmVqb2luOiByb3VuZDsgfQogICAgQG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTogZGFyaykgeyBwYXRoIHsgc3Ryb2tlOiAjRERFMUM4OyB9IH0KICA8L3N0eWxlPgogIDxwYXRoIGQ9Ik01Mi4yIDQ2LjQgQzQ4LjYgMzUuOCAzOS4yIDIzLjAgMjYuOCAxNS44IEMzNC44IDI1LjggNDEuOCAzNy40IDQ2LjYgNTAuMiIvPgogIDxwYXRoIGQ9Ik02OS4wIDQyLjQgQzY4LjYgMzcuNCA2Mi44IDM0LjggNTkuMCAzNy42IEM1NS4wIDQwLjYgNTMuNCA0Ni40IDUwLjQgNTEuNiBDNDcuNiA1Ni40IDQzLjQgNjAuNiAzOS4yIDYzLjYiLz4KICA8cGF0aCBkPSJNNjguNCA0NS40IEM2Ny42IDUyLjQgNjEuMCA2MC4wIDUyLjggNjIuNCBDNDguNiA2My42IDQ0LjYgNjQuNCA0MS4wIDY1LjIiLz4KICA8cGF0aCBkPSJNNjkuMCA0My4yIFE4Mi4wIDQ1LjQgOTUuMCA1MC42Ii8+CiAgPHBhdGggZD0iTTQwLjAgNjQuNCBDMzUuNCA3MC40IDMxLjQgNzUuNiAyNy40IDc5LjggTTQwLjAgNjQuNCBDMzcuNiA3MS44IDM1LjQgNzcuNiAzMy4yIDgzLjQiLz4KICA8cGF0aCBkPSJNNTUuOCA0My42IEM1Ni44IDMwLjYgNTIuNiAxNS4yIDQ0LjQgNS42IEM0Ny4yIDE4LjQgNDguOCAzMi40IDUwLjggNDcuNCIvPgo8L3N2Zz4K" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Fonte do nome na cortina: display=block, para nunca trocar de fonte no meio da animação -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&display=block">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Montserrat:wght@400;500;600&display=swap">
+<style>
+/* ==========================================================================
+   ABERTURA — camada por cima do site (CSS inline no <head>)
+   Só vale com html.intro. Sem a classe, a camada nem aparece.
+   ========================================================================== */
+:root {
+  --ab-cortina: #F8FAF1;   /* cor da cortina (off-white) */
+  --ab-traco: #3D4530;     /* traço do beija-flor e cor do nome (verde-oliva) */
+  --ab-fio: #CDD3B6;       /* fio da borda: verde-sálvia (um tom acima do #DDE1C8 para aparecer sobre o off-white) */
+  --ab-sombra: #3D4530;    /* cor da sombra da borda (bem transparente, ver opacidades no HTML) */
+  --ab-fonte-nome: "Cormorant Garamond", "Cormorant", Garamond, Georgia, serif;
+  --ab-tamanho-nome: clamp(2.6rem, 2rem + 4vw, 5.6rem);
+  --ab-espera: 4s;         /* rede de segurança: se o JS falhar, a camada some sozinha depois disso */
+}
+
+#abertura { display: none; }
+
+html.intro #abertura {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  overflow: hidden;
+  contain: strict;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  /* linear no total, para o último quadro ser exato (visibility: hidden de verdade) */
+  animation: ab-seguranca .35s linear var(--ab-espera) forwards;
+}
+
+#abertura svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  will-change: transform; /* cada SVG numa camada própria da GPU */
+}
+
+.ab-tecido { fill: var(--ab-cortina); }
+.ab-fio { fill: none; stroke: var(--ab-fio); stroke-width: 1.25px; stroke-linejoin: round; }
+.ab-sombra path { fill: none; stroke: var(--ab-sombra); stroke-linejoin: round; }
+
+.ab-nome {
+  fill: var(--ab-traco);
+  font-family: var(--ab-fonte-nome);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--ab-tamanho-nome);
+  letter-spacing: .01em;
+  transition: opacity .25s cubic-bezier(.16, 1, .3, 1);
+}
+#abertura.ab-esperando-fonte .ab-nome { opacity: 0; } /* nunca mostra a fonte reserva trocando no meio */
+
+.ab-passaro path {
+  fill: none;
+  stroke: var(--ab-traco);
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke; /* o traço fica com 1,5 px em qualquer tamanho */
+}
+.ab-rastro { fill: none; stroke-width: 1.5px; stroke-linecap: round; stroke-dasharray: 0 5; }
+
+/* O logo do menu já ocupa o lugar, invisível, até o beija-flor pousar nele */
+html.intro [data-abertura-logo] {
+  visibility: hidden;
+  animation: ab-logo-volta .35s ease-out var(--ab-espera) forwards;
+}
+
+/* Rede de segurança: some com fade e deixa de existir para o clique.
+   O "hidden" entra em 97% e fica até o fim: no Chrome, com atraso de 4 s, o progresso final
+   pode parar em 0,999999… (arredondamento) e um hidden só no 100% nunca seria aplicado. */
+@keyframes ab-seguranca {
+  0%   { opacity: 1; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+  96%  { opacity: 0; visibility: visible; }
+  97%, 100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+@keyframes ab-logo-volta {
+  from { visibility: visible; opacity: 0; }
+  to   { visibility: visible; opacity: 1; }
+}
+</style>
+<style>
+/* ==========================================================================
+   MENU AO ROLAR — barra cheia no topo, pílula flutuante depois de ~100 px
+   (vale sempre, não só na primeira visita)
+   ========================================================================== */
+:root {
+  --menu-altura: 76px;                       /* barra cheia */
+  --menu-pilula-altura: 56px;
+  --menu-pilula-topo: 12px;                  /* distância da pílula até o topo */
+  --menu-pilula-largura: min(520px, 100% - 24px);
+  --menu-dur: 420ms;                         /* 350–450 ms */
+  --menu-ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+@media (max-width: 760px) {
+  :root {
+    --menu-altura: 64px;
+    --menu-pilula-altura: 52px;
+    --menu-pilula-largura: calc(100% - 24px); /* celular: quase toda a largura, 12 px de margem */
+  }
+}
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--menu-altura);
+  pointer-events: none; /* só a pílula/barra recebe clique, não o vazio em volta */
+}
+
+/* Borda verde-sálvia + sombra suave da pílula. Fica ATRÁS do fundo translúcido:
+   enquanto o fundo ainda está largo, ele a cobre; ela vai aparecendo conforme a
+   pílula se forma (nunca aparece uma borda "solta" dentro de um fundo maior). */
+.menu__contorno {
+  position: absolute;
+  top: var(--menu-pilula-topo);
+  left: 50%;
+  width: var(--menu-pilula-largura);
+  height: var(--menu-pilula-altura);
+  transform: translateX(-50%);
+  border: 1px solid #DDE1C8;
+  border-radius: 999px;
+  box-shadow: 0 12px 32px -16px rgb(61 69 48 / 0.30), 0 2px 8px -3px rgb(61 69 48 / 0.10);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease-out;
+}
+.menu--pilula .menu__contorno {
+  opacity: 1;
+  transition: opacity 240ms var(--menu-ease) 180ms;
+}
+
+/* Fundo: a mesma peça vira pílula recortando com clip-path (anima na GPU, sem layout) */
+.menu__fundo {
+  position: absolute;
+  inset: 0;
+  background: rgb(248 250 241 / 0.84);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow: inset 0 -1px 0 rgb(221 225 200 / 0.95); /* fio de baixo da barra cheia */
+  clip-path: inset(0 0 0 0 round 0px);
+  transition: clip-path var(--menu-dur) var(--menu-ease), box-shadow 160ms ease-out;
+}
+.menu--pilula .menu__fundo {
+  box-shadow: inset 0 -1px 0 rgb(221 225 200 / 0);
+  /* 1 px para dentro do contorno, para a borda ficar inteira à vista */
+  clip-path: inset(
+    calc(var(--menu-pilula-topo) + 1px)
+    calc((100% - var(--menu-pilula-largura)) / 2 + 1px)
+    calc(var(--menu-altura) - var(--menu-pilula-topo) - var(--menu-pilula-altura) + 1px)
+    round calc(var(--menu-pilula-altura) / 2 - 1px)
+  );
+}
+
+/* Conteúdo */
+.menu__barra {
+  position: relative;
+  height: var(--menu-altura);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.menu--pilula .menu__barra {
+  width: var(--menu-pilula-largura);
+  max-width: none;
+  height: var(--menu-pilula-altura);
+  margin-top: var(--menu-pilula-topo);
+  padding: 0 7px 0 16px;
+}
+
+.menu__marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #3D4530;
+  text-decoration: none;
+  pointer-events: auto;
+}
+.menu__logo { width: 30px; height: 30px; flex: none; overflow: visible; color: #3D4530; }
+.menu__logo path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.menu__nome { font: 600 15px/1 "Montserrat", system-ui, sans-serif; letter-spacing: .01em; white-space: nowrap; }
+
+/* Links + WhatsApp andam juntos (um grupo só, alinhado à direita) */
+.menu__direita {
+  margin-left: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.menu__links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  pointer-events: auto;
+  /* voltando ao topo: só aparecem depois que o grupo passou pelo nome */
+  transition: opacity 240ms var(--menu-ease) 180ms, visibility 0s;
+}
+.menu__links a {
+  color: rgb(61 69 48 / 0.82);
+  font: 500 13.5px/1 "Montserrat", system-ui, sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .2s;
+}
+.menu__links a:hover { color: #9A4E1F; }
+.menu--pilula .menu__links {
+  position: absolute; /* sai do fluxo, mas continua colado à esquerda do WhatsApp */
+  top: 0;
+  bottom: 0;
+  right: calc(100% + 28px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 160ms ease-out, visibility 0s 160ms; /* os links somem com fade */
+}
+
+.menu__whats {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #3D4530;
+  color: #F8FAF1;
+  font: 600 13px/1 "Montserrat", system-ui, sans-serif;
+  letter-spacing: .02em;
+  text-decoration: none;
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: background-color .2s;
+}
+.menu__whats:hover { background: #2f3625; }
+
+@media (max-width: 760px) {
+  .menu__barra { padding: 0 16px; }
+  .menu__links { display: none; }
+  .menu__whats { height: 38px; padding: 0 16px; }
+}
+
+/* Movimento reduzido: troca de estado sem animação */
+@media (prefers-reduced-motion: reduce) {
+  .menu__fundo, .menu__contorno, .menu__links { transition: none !important; }
+}
+/* ==========================================================================
+   SITE DE EXEMPLO (só para a demonstração) — paleta e fontes do storyboard
+   ========================================================================== */
+:root {
+  --offwhite: #F8FAF1;
+  --bege: #EFEBDD;
+  --oliva: #3D4530;
+  --terracota: #9A4E1F;
+  --salvia: #DDE1C8;
+  --texto-suave: rgb(61 69 48 / 0.78);
+  --serifa: "Cormorant Garamond", "Cormorant", Garamond, Georgia, serif;
+  --sans: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --largura: 1200px;
+  --respiro: clamp(20px, 5vw, 48px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--offwhite);
+  color: var(--oliva);
+  font: 400 16px/1.7 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { display: block; }
+a { color: inherit; }
+.envelope { max-width: var(--largura); margin: 0 auto; padding: 0 var(--respiro); }
+
+/* ---------- Topo (hero) ---------- */
+.topo {
+  min-height: 100dvh;
+  padding: calc(var(--menu-altura) + clamp(24px, 6vh, 64px)) 0 clamp(40px, 8vh, 80px);
+  display: flex;
+  align-items: center;
+}
+.topo__grade {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 96px);
+}
+.chapeu {
+  margin: 0 0 18px;
+  color: var(--terracota);
+  font: 600 0.74rem/1.4 var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.topo h1 {
+  margin: 0 0 22px;
+  font: 500 clamp(2.6rem, 1.5rem + 3.6vw, 4.6rem)/1.04 var(--serifa);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.topo h1 em, h2 em { font-style: italic; font-weight: 400; color: var(--terracota); }
+.topo__texto { max-width: 34em; margin: 0 0 34px; color: var(--texto-suave); font-size: clamp(1rem, 0.96rem + 0.2vw, 1.08rem); }
+.acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
+.botao {
+  display: inline-flex;
+  align-items: center;
+  height: 52px;
+  padding: 0 28px;
+  border-radius: 999px;
+  background: var(--oliva);
+  color: var(--offwhite);
+  font: 600 0.9rem/1 var(--sans);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background-color .2s, transform .2s;
+}
+.botao:hover { background: #2f3625; }
+.link-seta { font: 600 0.88rem/1 var(--sans); text-decoration: none; border-bottom: 1px solid var(--salvia); padding-bottom: 6px; }
+.link-seta:hover { border-color: var(--terracota); color: var(--terracota); }
+
+.arco {
+  justify-self: end;
+  width: min(100%, 440px);
+  aspect-ratio: 4 / 5;
+  border-radius: 999px 999px 28px 28px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #E6E9D6 0%, var(--salvia) 100%);
+  position: relative;
+}
+.arco svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.arco__legenda {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  text-align: center;
+  font: 500 0.7rem/1 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(61 69 48 / 0.45);
+}
+
+/* ---------- Seções ---------- */
+.secao { padding: clamp(72px, 12vw, 136px) 0; }
+.secao--bege { background: var(--bege); }
+.secao h2 {
+  margin: 0 0 18px;
+  font: 500 clamp(2rem, 1.3rem + 2.4vw, 3.2rem)/1.1 var(--serifa);
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.secao__intro { max-width: 38em; color: var(--texto-suave); margin: 0 0 48px; }
+.duas { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 88px); align-items: start; }
+.duas p { margin: 0 0 1.1em; color: var(--texto-suave); }
+.lista-leve { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--salvia); }
+.lista-leve li { padding: 16px 0; border-bottom: 1px solid var(--salvia); display: flex; gap: 14px; }
+.lista-leve span { color: var(--terracota); font-family: var(--serifa); font-style: italic; font-size: 1.2rem; line-height: 1.3; min-width: 1.6em; }
+
+.cartoes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.cartao { background: var(--offwhite); border: 1px solid var(--salvia); border-radius: 22px; padding: 28px 24px 30px; }
+.cartao h3 { margin: 18px 0 8px; font: 500 1.45rem/1.15 var(--serifa); }
+.cartao p { margin: 0; font-size: 0.93rem; color: var(--texto-suave); }
+.cartao svg { width: 34px; height: 34px; }
+.cartao svg path, .cartao svg circle { fill: none; stroke: var(--terracota); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+
+.passos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 4vw, 48px); counter-reset: passo; }
+.passos li { counter-increment: passo; border-top: 1px solid var(--oliva); padding-top: 22px; }
+.passos li::before { content: "0" counter(passo); display: block; margin-bottom: 14px; font: italic 400 2.2rem/1 var(--serifa); color: var(--terracota); }
+.passos h3 { margin: 0 0 8px; font: 600 1rem/1.35 var(--sans); }
+.passos p { margin: 0; color: var(--texto-suave); font-size: 0.95rem; }
+
+.duvidas { max-width: 820px; }
+.duvidas details { border-bottom: 1px solid var(--salvia); }
+.duvidas summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 40px 22px 0;
+  position: relative;
+  font: 500 1.35rem/1.3 var(--serifa);
+}
+.duvidas summary::-webkit-details-marker { display: none; }
+.duvidas summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font: 300 1.6rem/1 var(--sans); color: var(--terracota); transition: transform .3s; }
+.duvidas details[open] summary::after { transform: rotate(45deg); }
+.duvidas details p { margin: 0 0 22px; color: var(--texto-suave); max-width: 40em; }
+
+.convite { background: var(--oliva); color: var(--offwhite); text-align: center; }
+.convite h2 { color: var(--offwhite); }
+.convite h2 em { color: #E7B48F; }
+.convite p { color: rgb(248 250 241 / 0.78); max-width: 32em; margin: 0 auto 36px; }
+.convite .botao { background: var(--offwhite); color: var(--oliva); }
+.convite .botao:hover { background: #fff; }
+
+.rodape { padding: 36px 0 96px; font-size: 0.8rem; color: var(--texto-suave); }
+.rodape .envelope { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+
+/* ---------- Controles da demonstração ---------- */
+.demo-controles {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 90;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgb(239 235 221 / 0.92);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--salvia);
+  box-shadow: 0 8px 24px -14px rgb(61 69 48 / 0.35);
+}
+.demo-controles button {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 14px;
+  background: transparent;
+  color: var(--oliva);
+  font: 600 12px/1 var(--sans);
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+.demo-controles button:first-child { background: var(--oliva); color: var(--offwhite); }
+.demo-controles [data-demo="lento"] { padding-inline: 10px; color: var(--terracota); }
+.demo-controles [data-demo="lento"]:hover { background: rgb(154 78 31 / 0.08); }
+.demo-controles button:focus-visible { outline: 2px solid var(--terracota); outline-offset: 2px; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 960px) {
+  .cartoes { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 760px) {
+  .topo { min-height: auto; }
+  .topo__grade, .duas, .passos { grid-template-columns: 1fr; }
+  .arco { justify-self: center; width: min(78vw, 320px); margin-top: 8px; }
+  .acoes .botao { width: 100%; justify-content: center; }
+}
+@media (max-width: 520px) {
+  .cartoes { grid-template-columns: 1fr; }
+  .demo-controles { left: 50%; transform: translateX(-50%); bottom: 12px; white-space: nowrap; }
+  .demo-controles button { padding: 9px 10px; }
+  .demo-controles [data-demo="lento"] { padding-inline: 7px; }
+}
+@media (max-width: 400px) { .demo-longo { display: none; } }
+</style>
+</head>
+<body>
+<!-- ABERTURA: camada por cima do site (logo no início do <body>) -->
+<div id="abertura" aria-hidden="true">
+  <svg class="ab-pano" focusable="false">
+    <defs>
+      <clipPath id="ab-corte">
+        <rect class="ab-inicial" width="100%" height="100%"/>
+        <path data-borda/>
+      </clipPath>
+    </defs>
+    <!-- sombra suave da borda: traços do mesmo path, do mais largo/claro ao mais estreito/escuro (sem filtro de blur) -->
+    <g class="ab-sombra" transform="translate(0 1.5)">
+      <path data-borda stroke-width="36" stroke-opacity="0.006"/>
+      <path data-borda stroke-width="28" stroke-opacity="0.008"/>
+      <path data-borda stroke-width="22" stroke-opacity="0.01"/>
+      <path data-borda stroke-width="17" stroke-opacity="0.012"/>
+      <path data-borda stroke-width="13" stroke-opacity="0.015"/>
+      <path data-borda stroke-width="9" stroke-opacity="0.018"/>
+      <path data-borda stroke-width="6" stroke-opacity="0.022"/>
+      <path data-borda stroke-width="3" stroke-opacity="0.03"/>
+    </g>
+    <rect class="ab-tecido ab-inicial" width="100%" height="100%"/>
+    <path class="ab-tecido" data-borda/>
+    <g clip-path="url(#ab-corte)">
+      <g class="ab-nome-grupo">
+        <text class="ab-nome" x="50%" y="50%" text-anchor="middle" dominant-baseline="central">Maria Luiza</text>
+      </g>
+    </g>
+    <path class="ab-fio" data-borda/>
+  </svg>
+  <svg class="ab-ceu" focusable="false">
+    <defs>
+      <linearGradient id="ab-rastro-cor" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#3D4530" stop-opacity="0"/>
+        <stop offset=".78" stop-color="#3D4530" stop-opacity=".62"/>
+        <stop offset="1" stop-color="#3D4530" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <path class="ab-rastro" stroke="url(#ab-rastro-cor)"/>
+    <g class="ab-passaro" transform="translate(-999 -999)">
+      <g class="ab-asa-tras">
+        <path data-pose="alta" d="M52.2 46.4 C48.6 35.8 39.2 23.0 26.8 15.8 C34.8 25.8 41.8 37.4 46.6 50.2"/>
+        <path data-pose="meia" d="M52.2 46.4 C45.2 37.6 31.4 28.6 14.6 24.6 C28.0 31.0 39.6 39.6 46.6 50.2" style="opacity:0"/>
+        <path data-pose="baixa" d="M52.2 46.4 C42.6 44.0 27.0 44.6 11.6 49.8 C26.4 48.8 38.8 49.0 46.6 50.2" style="opacity:0"/>
+      </g>
+      <path d="M69.0 42.4 C68.6 37.4 62.8 34.8 59.0 37.6 C55.0 40.6 53.4 46.4 50.4 51.6 C47.6 56.4 43.4 60.6 39.2 63.6"/>
+      <path d="M68.4 45.4 C67.6 52.4 61.0 60.0 52.8 62.4 C48.6 63.6 44.6 64.4 41.0 65.2"/>
+      <path d="M69.0 43.2 Q82.0 45.4 95.0 50.6"/>
+      <path d="M40.0 64.4 C35.4 70.4 31.4 75.6 27.4 79.8 M40.0 64.4 C37.6 71.8 35.4 77.6 33.2 83.4"/>
+      <g class="ab-asa-frente">
+        <path data-pose="alta" d="M55.8 43.6 C56.8 30.6 52.6 15.2 44.4 5.6 C47.2 18.4 48.8 32.4 50.8 47.4"/>
+        <path data-pose="meia" d="M55.8 43.6 C52.4 32.8 41.8 20.4 26.6 12.6 C36.6 22.2 45.2 33.6 50.8 47.4" style="opacity:0"/>
+        <path data-pose="baixa" d="M55.8 43.6 C47.6 38.4 32.4 34.4 14.8 35.8 C30.4 38.8 43.4 42.6 50.8 47.4" style="opacity:0"/>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<header class="menu" data-menu>
+  <div class="menu__contorno" aria-hidden="true"></div>
+  <div class="menu__fundo" aria-hidden="true"></div>
+  <div class="menu__barra">
+    <a class="menu__marca" href="#topo" data-menu-flip aria-label="Maria Luiza — início">
+      <svg class="menu__logo" data-abertura-logo viewBox="0 0 100 100" overflow="visible" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path vector-effect="non-scaling-stroke" d="M52.2 46.4 C48.6 35.8 39.2 23.0 26.8 15.8 C34.8 25.8 41.8 37.4 46.6 50.2"/>
+          <path vector-effect="non-scaling-stroke" d="M69.0 42.4 C68.6 37.4 62.8 34.8 59.0 37.6 C55.0 40.6 53.4 46.4 50.4 51.6 C47.6 56.4 43.4 60.6 39.2 63.6"/>
+          <path vector-effect="non-scaling-stroke" d="M68.4 45.4 C67.6 52.4 61.0 60.0 52.8 62.4 C48.6 63.6 44.6 64.4 41.0 65.2"/>
+          <path vector-effect="non-scaling-stroke" d="M69.0 43.2 Q82.0 45.4 95.0 50.6"/>
+          <path vector-effect="non-scaling-stroke" d="M40.0 64.4 C35.4 70.4 31.4 75.6 27.4 79.8 M40.0 64.4 C37.6 71.8 35.4 77.6 33.2 83.4"/>
+          <path vector-effect="non-scaling-stroke" d="M55.8 43.6 C56.8 30.6 52.6 15.2 44.4 5.6 C47.2 18.4 48.8 32.4 50.8 47.4"/>
+        </g>
+      </svg>
+      <span class="menu__nome" data-abertura-sobe>Maria Luiza</span>
+    </a>
+    <div class="menu__direita" data-menu-flip="fim">
+      <nav class="menu__links" aria-label="Seções" data-abertura-sobe>
+        <a href="#sobre">Sobre</a>
+        <a href="#ajuda">Como posso ajudar</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#duvidas">Dúvidas</a>
+      </nav>
+      <!-- troque pelo link real: https://wa.me/55DDDNUMERO?text=... -->
+      <a class="menu__whats" href="#contato" data-abertura-sobe>WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<main id="topo">
+  <section class="topo">
+    <div class="envelope topo__grade">
+      <div>
+        <p class="chapeu" data-abertura-sobe>Psicologia clínica · online e presencial</p>
+        <h1 data-abertura-sobe>Um espaço calmo para você se <em>escutar</em>.</h1>
+        <p class="topo__texto" data-abertura-sobe>Atendimento para adultos, com acolhimento e escuta cuidadosa. Um lugar seguro para entender o que você sente e encontrar caminhos possíveis, no seu tempo.</p>
+        <div class="acoes" data-abertura-sobe>
+          <a class="botao" href="#contato">Agendar uma conversa</a>
+          <a class="link-seta" href="#sobre">Conhecer meu trabalho →</a>
+        </div>
+      </div>
+      <div class="arco" data-abertura-sobe role="img" aria-label="Espaço para a foto da Maria Luiza">
+        <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <circle cx="262" cy="150" r="58" fill="#9A4E1F" opacity=".07"/>
+          <g fill="none" stroke="#3D4530" stroke-opacity=".42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+            <path vector-effect="non-scaling-stroke" d="M196 500 C188 420 210 350 198 280 C190 232 204 190 214 150"/>
+            <path vector-effect="non-scaling-stroke" d="M199 410 C170 398 150 372 146 342 C172 350 192 372 199 410Z"/>
+            <path vector-effect="non-scaling-stroke" d="M201 356 C228 344 248 318 252 288 C226 298 207 320 201 356Z"/>
+            <path vector-effect="non-scaling-stroke" d="M198 300 C172 290 156 266 154 240 C178 248 194 270 198 300Z"/>
+            <path vector-effect="non-scaling-stroke" d="M205 236 C228 224 242 202 244 178 C222 188 207 208 205 236Z"/>
+            <path vector-effect="non-scaling-stroke" d="M211 172 C198 160 192 142 194 124 C208 134 214 152 211 172Z"/>
+          </g>
+        </svg>
+        <span class="arco__legenda">foto</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="sobre">
+    <div class="envelope duas">
+      <div>
+        <p class="chapeu">Sobre</p>
+        <h2>Prazer, sou a <em>Maria Luiza</em>.</h2>
+      </div>
+      <div>
+        <p>Texto de exemplo para a apresentação: quem ela é, como enxerga o cuidado em saúde mental e o que um paciente pode esperar das sessões. Um parágrafo curto, em primeira pessoa, no mesmo tom acolhedor da abertura.</p>
+        <p>Um segundo parágrafo pode falar da formação, da abordagem e do que a move nesse trabalho, sempre em linguagem simples.</p>
+        <ul class="lista-leve">
+          <li><span>i.</span>Escuta sem julgamentos, no ritmo de cada pessoa.</li>
+          <li><span>ii.</span>Sessões online por vídeo ou presenciais no consultório.</li>
+          <li><span>iii.</span>Sigilo e ética em todas as etapas do atendimento.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao secao--bege" id="ajuda">
+    <div class="envelope">
+      <p class="chapeu">Como posso ajudar</p>
+      <h2>Alguns temas que costumam chegar <em>ao consultório</em></h2>
+      <p class="secao__intro">Uma lista curta e sem jargão ajuda o visitante a se reconhecer. Os temas abaixo são exemplos e devem ser ajustados à prática real.</p>
+      <div class="cartoes">
+        <article class="cartao">
+          <svg viewBox="0 0 34 34" aria-hidden="true"><path d="M4 22c4-6 8-6 12 0s8 6 14 0"/><path d="M4 14c4-6 8-6 12 0s8 6 14 0"/></svg>
+          <h3>Ansiedade e estresse</h3>
+          <p>Entender o que acelera por dentro e construir formas mais gentis de lidar com a pressão do dia a dia.</p>
+        </article>
+        <article class="cartao">
+          <svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="12"/><circle cx="17" cy="17" r="5"/></svg>
+          <h3>Autoconhecimento</h3>
+          <p>Um tempo só seu para olhar a própria história, os padrões que se repetem e o que você quer cultivar.</p>
+        </article>
+        <article class="cartao">
+          <svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="12" cy="17" r="8"/><circle cx="22" cy="17" r="8"/></svg>
+          <h3>Relações e vínculos</h3>
+          <p>Conflitos, limites e afetos nas relações de família, amizade, trabalho e amor.</p>
+        </article>
+        <article class="cartao">
+          <svg viewBox="0 0 34 34" aria-hidden="true"><path d="M5 27c6-2 9-8 12-14s7-8 12-8"/><path d="M22 5h7v7"/></svg>
+          <h3>Fases de mudança</h3>
+          <p>Mudanças de cidade, de carreira, lutos e recomeços que pedem um espaço de elaboração.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" id="como-funciona">
+    <div class="envelope">
+      <p class="chapeu">Como funciona</p>
+      <h2>Do primeiro contato à <em>primeira sessão</em></h2>
+      <p class="secao__intro">Três passos simples, para tirar a ansiedade de começar.</p>
+      <ol class="passos">
+        <li><h3>Você me chama no WhatsApp</h3><p>Conta, se quiser, um pouco do que está buscando. Respondo com os horários disponíveis.</p></li>
+        <li><h3>Conversa inicial</h3><p>Um primeiro encontro para nos conhecermos, alinharmos expectativas e combinarmos o formato.</p></li>
+        <li><h3>Acompanhamento</h3><p>Sessões semanais, online ou presenciais, com a frequência que fizer sentido para você.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao secao--bege" id="duvidas">
+    <div class="envelope">
+      <p class="chapeu">Dúvidas</p>
+      <h2>Perguntas <em>frequentes</em></h2>
+      <div class="duvidas">
+        <details><summary>Como funciona o atendimento online?</summary><p>Resposta de exemplo: as sessões acontecem por videochamada, em plataforma segura, com a mesma duração e o mesmo sigilo do presencial.</p></details>
+        <details><summary>Quanto tempo dura cada sessão?</summary><p>Resposta de exemplo: em geral, cerca de 50 minutos, uma vez por semana.</p></details>
+        <details><summary>Preciso ter um motivo “grande” para começar?</summary><p>Resposta de exemplo: não. A terapia também é um espaço de cuidado e prevenção, não só de crise.</p></details>
+        <details><summary>Você atende por convênio?</summary><p>Resposta de exemplo: explique aqui como funciona o pagamento e se há emissão de recibo para reembolso.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao convite" id="contato">
+    <div class="envelope">
+      <h2>Vamos <em>conversar</em>?</h2>
+      <p>Me chame no WhatsApp para tirar dúvidas ou agendar a primeira sessão.</p>
+      <a class="botao" href="#contato">Chamar no WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="envelope">
+    <span>Maria Luiza · Psicóloga · CRP 00/00000</span>
+    <span>Conteúdo de exemplo para demonstrar a abertura e o menu.</span>
+  </div>
+</footer>
+
+<div class="demo-controles" role="group" aria-label="Controles da demonstração">
+  <button type="button" data-demo="rever">↺ Rever<span class="demo-longo"> animação</span></button>
+  <button type="button" data-demo="lento" data-vel="0.25" title="Rever em câmera lenta (25%)">25%</button>
+  <button type="button" data-demo="lento" data-vel="0.1" title="Rever em câmera lenta (10%)">10%</button>
+  <button type="button" data-demo="esquecer">Esquecer<span class="demo-longo"> visita</span></button>
+</div>
+
+<script>
+/* ==========================================================================
+   ABERTURA — "o beija-flor puxa a cortina"  ·  site Maria Luiza
+   --------------------------------------------------------------------------
+   Roda só quando o script do <head> pôs a classe .intro no <html>
+   (1ª visita, ?intro na URL, e nunca com "reduzir movimento").
+   Tudo é calculado pelo relógio, num único laço de requestAnimationFrame:
+   a curva da borda (um único path), o nome recortado e o beija-flor.
+   Cole antes de </body>, depois do HTML do site.
+   ========================================================================== */
+(() => {
+  'use strict';
+
+  /* ---------- AJUSTES: tempos (segundos, contados do início) ------------- */
+  const T = {
+    chegada:    0.40,  // 1. ENTRADA: chega ao meio da borda de baixo
+    pega:       0.50,  // 2. PEGADA: encosta o bico na borda e segura
+    puxadinha:  0.60,  //    puxãozinho: a borda sobe e abre uma fresta do site
+    respira:    0.70,  //    recolhe um pouquinho (antecipação) e começa a subir
+    solta:      1.28,  // 3. PUXADA: chega perto do topo e solta a cortina
+    cortinaSai: 1.58,  //    a cortina sobe sozinha e sai pelo topo (some da tela ~1,45 s)
+    voo:        1.42,  // 4. POUSO: começa o arco curto até o logo
+    assenta:    0.14,  //    últimos 0,14 s: o logo real assenta sozinho (2 px de overshoot)
+    fim:        1.80,  //    fim = duração total
+    batida:     0.030, // troca de pose das asas (~30 ms)
+    rastro:     0.30,  // o rastro pontilhado some em ~300 ms
+    pular:      0.15,  // saída rápida ao clicar, tocar, rolar ou teclar
+    fonte:      0.60,  // espera máxima pela fonte do nome antes de começar
+  };
+
+  /* ---------- AJUSTES: medidas -------------------------------------------- */
+  const M = {
+    passaro:   [72, 0.16, 112], // tamanho do beija-flor: clamp(72px, 16vmin, 112px)
+    inclina:   34,   // graus: inclinação enquanto segura (bico apontando para a borda)
+    pairar:    3,    // ± px de pairar
+    puxadinha: 16,   // px que a borda sobe no puxãozinho
+    respira:   6,    // px que ele recolhe antes de puxar
+    topo:      0.34, // onde ele solta a cortina, logo abaixo do nome (fração da altura da tela)
+    arco:      0.13, // profundidade do arco da borda na puxada (fração da largura)…
+    arcoMin:   44,   //   …nunca menos que isso (px)
+    arcoMax:   170,  //   …nem mais que isso (px)
+    franzido:  9,    // px que as pontas ficam abaixo do centro no puxãozinho
+    onda:      [4, 0.008, 10], // ondulação ao soltar: clamp(4px, 0,8% da largura, 10px)
+    nome:      0.45, // o nome sobe a 45% da velocidade da borda (mais devagar)
+    sobe:      14,   // px que os elementos do topo sobem ao serem revelados
+    freio:     5,    // px de overshoot ao frear na chegada
+    pouso:     2,    // px de overshoot ao assentar no logo
+    margem:    48,   // a borda passa um pouco das laterais da tela
+  };
+
+  /* ---------- Curvas de aceleração (as mesmas do CSS) --------------------- */
+  const CURVA = {
+    entrada: [0.16, 1, 0.3, 1],     // entradas
+    meio:    [0.65, 0, 0.35, 1],    // movimentos que começam e terminam parados
+    pouso:   [0.34, 1.56, 0.64, 1], // pousos: overshoot sutil
+  };
+
+  /* ---------- Pontos do desenho (viewBox 0 0 100 100) --------------------- */
+  const BICO = [95, 50.6];  // ponta do bico: é ela que segura a borda
+  const CENTRO = [55, 50];  // centro do corpo: eixo de giro e de escala
+  const CICLO = [0, 1, 2, 1]; // poses na batida: 0 alta (= logo), 1 meia, 2 baixa
+
+  /* ======================================================================== */
+
+  const html = document.documentElement;
+  const CHAVE_SOBE = 'data-abertura-sobe';
+  const limita = (v, a, b) => (v < a ? a : v > b ? b : v);
+  const mistura = (a, b, k) => a + (b - a) * k;
+  const fase = (t, a, b) => limita((t - a) / (b - a), 0, 1);
+  const suave = (k) => k * k * (3 - 2 * k);
+  const seno2 = (k) => { const v = Math.sin(Math.PI * k); return v * v; };
+  const dist = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const r1 = (v) => Math.round(v * 10) / 10;
+  const r2 = (v) => Math.round(v * 100) / 100;
+  const cssCurva = (c) => `cubic-bezier(${c.join(', ')})`;
+  const pausa = (ms) => new Promise((ok) => setTimeout(ok, ms));
+
+  // cubic-bezier igual ao do CSS
+  function curva([x1, y1, x2, y2]) {
+    const cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
+    const cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+    const X = (s) => ((ax * s + bx) * s + cx) * s;
+    const Y = (s) => ((ay * s + by) * s + cy) * s;
+    const dX = (s) => (3 * ax * s + 2 * bx) * s + cx;
+    return (x) => {
+      if (x <= 0) return 0;
+      if (x >= 1) return 1;
+      let s = x;
+      for (let i = 0; i < 8; i++) {
+        const e = X(s) - x;
+        if (Math.abs(e) < 1e-6) return Y(s);
+        const d = dX(s);
+        if (Math.abs(d) < 1e-6) break;
+        s -= e / d;
+      }
+      let lo = 0, hi = 1;
+      s = x;
+      for (let i = 0; i < 32; i++) {
+        const v = X(s);
+        if (Math.abs(v - x) < 1e-6) break;
+        if (v < x) lo = s; else hi = s;
+        s = (lo + hi) / 2;
+      }
+      return Y(s);
+    };
+  }
+  const E = { entrada: curva(CURVA.entrada), meio: curva(CURVA.meio), pouso: curva(CURVA.pouso) };
+
+  // overshoot do cubic-bezier de pouso (~9,8%) e sua velocidade inicial
+  let picoPouso = 0;
+  for (let i = 1; i < 400; i++) picoPouso = Math.max(picoPouso, E.pouso(i / 400) - 1);
+  const arranquePouso = CURVA.pouso[1] / CURVA.pouso[0];
+
+  // Soma ao fim de uma curva um overshoot calibrado (fração do trajeto), mantendo a parada suave.
+  function comOvershoot(base, fracao, inicio) {
+    const bossa = (u) => (u <= inicio ? 0 : seno2((u - inicio) / (1 - inicio)));
+    const excesso = (f) => {
+      let m = 0;
+      for (let i = 1; i <= 200; i++) { const u = i / 200; m = Math.max(m, base(u) + f * bossa(u)); }
+      return m - 1;
+    };
+    let lo = 0, hi = 0.6;
+    for (let i = 0; i < 22; i++) { const f = (lo + hi) / 2; if (excesso(f) < fracao) lo = f; else hi = f; }
+    const f = (lo + hi) / 2;
+    return (u) => (u <= 0 ? 0 : u >= 1 ? 1 : base(u) + f * bossa(u));
+  }
+
+  // Bézier quadrática: ponto e derivada
+  const bq = (a, c, b, u) => {
+    const v = 1 - u;
+    return [v * v * a[0] + 2 * v * u * c[0] + u * u * b[0], v * v * a[1] + 2 * v * u * c[1] + u * u * b[1]];
+  };
+  const bqD = (a, c, b, u) => [
+    2 * (1 - u) * (c[0] - a[0]) + 2 * u * (b[0] - c[0]),
+    2 * (1 - u) * (c[1] - a[1]) + 2 * u * (b[1] - c[1]),
+  ];
+  const gira = ([x, y], graus) => {
+    const a = (graus * Math.PI) / 180, c = Math.cos(a), s = Math.sin(a);
+    return [x * c - y * s, x * s + y * c];
+  };
+  // posição do centro do corpo para a ponta do bico ficar num ponto
+  const centroPelaPonta = (ponta, r, s) => {
+    const o = gira([(BICO[0] - CENTRO[0]) * s, (BICO[1] - CENTRO[1]) * s], r);
+    return [ponta[0] - o[0], ponta[1] - o[1]];
+  };
+
+  /* ---------- Câmera lenta (para revisar) ----------------------------------
+     O painel Animations do DevTools não desacelera requestAnimationFrame, então:
+     ?intro=0.25 na URL (25%) ou, no console, abertura.tocar(0.1) (10%). */
+  const lerVel = (v) => { const n = parseFloat(v); return n > 0 && n <= 1 ? n : 1; };
+  let vel = 1;
+  try { vel = lerVel(new URLSearchParams(location.search).get('intro')); } catch (e) {}
+
+  /* ---------- Estado ------------------------------------------------------- */
+  let camada = document.getElementById('abertura');
+  const molde = camada ? camada.cloneNode(true) : null; // para "rever animação"
+  let el = {};          // elementos da camada
+  let logo = null;      // logo real do menu
+  let estado = 'parado';
+  let raf = 0, t0 = 0;
+  let W = 0, H = 0, tam = 0, esc = 1, yRepouso = 0, yTopo = 0, ySai = 0, onda = 0, atrasoMax = 0.04;
+  let P0, C0, P2, pEntrada, pouso, sobem = [], ultimoD = '', asasAntes = '', rastroLigado = false;
+  let rolagemInicial = 0, fonteOk = true;
+
+  /* ---------- Geometria do instante t --------------------------------------- */
+
+  // 1. Entrada: o centro do corpo percorre uma quadrática P0 → C0 → P2
+  function naEntrada(t) {
+    const u = fase(t, 0, T.chegada);
+    const p = pEntrada(u);
+    const c = bq(P0, C0, P2, p);
+    const d = bqD(P0, C0, P2, p);
+    const rumo = (Math.atan2(d[1], d[0]) * 180) / Math.PI;
+    const vel = limita((pEntrada(Math.min(1, u + 0.01)) - p) / 0.01 / (CURVA.entrada[1] / CURVA.entrada[0]), 0, 1);
+    const inclinacao = limita(rumo * 0.55, -12, 40) * Math.sqrt(vel); // corpo inclina na direção do voo
+    return { c, r: mistura(inclinacao, M.inclina, suave(fase(u, 0.35, 1))), s: esc };
+  }
+
+  // 2–3. Ponta do bico (manda na borda enquanto segura)
+  function pontaY(t) {
+    let y;
+    if (t < T.pega) y = mistura(yRepouso - 4, yRepouso, suave(fase(t, T.chegada, T.pega)));
+    else if (t < T.puxadinha) y = mistura(yRepouso, yRepouso - M.puxadinha, suave(fase(t, T.pega, T.puxadinha)));
+    else if (t < T.respira) y = mistura(yRepouso - M.puxadinha, yRepouso - M.puxadinha + M.respira, suave(fase(t, T.puxadinha, T.respira)));
+    else y = mistura(yRepouso - M.puxadinha + M.respira, yTopo, E.meio(fase(t, T.respira, T.solta)));
+    const pairando = suave(fase(t, T.chegada, T.chegada + 0.06)) * (1 - suave(fase(t, T.respira - 0.02, T.respira + 0.1)));
+    return y + M.pairar * Math.sin((2 * Math.PI * (t - T.pega)) / 0.3) * pairando; // zero exato na pegada
+  }
+  function segurando(t) {
+    const k = fase(t, T.respira, T.solta);
+    const r = M.inclina - 12 * seno2(k) - 6 * suave(k); // fica mais em pé no meio da subida
+    return { c: centroPelaPonta([W / 2, pontaY(t)], r, esc), r, s: esc };
+  }
+
+  // depois de soltar: pequeno impulso para cima, aceno do bico, deriva para o lado do logo
+  function solto(t) {
+    const k = fase(t, T.solta, T.voo);
+    const ponta = [
+      W / 2 - W * 0.025 * suave(k),
+      yTopo - 7 * seno2(k) + 2 * Math.sin((2 * Math.PI * (t - T.solta)) / 0.3) * seno2(k),
+    ];
+    const r = M.inclina - 6 - 12 * seno2(k);
+    return { c: centroPelaPonta(ponta, r, esc), r, s: esc };
+  }
+
+  // 4. Pouso (FLIP): mede o logo e monta voo + assentamento com velocidade contínua
+  function planejarPouso() {
+    const ini = solto(T.voo);
+    const L = logo && logo.getBoundingClientRect();
+    if (!L || L.width < 2) { pouso = { semLogo: true, ini }; return; }
+    const sL = L.width / 100;
+    const alvo = [L.left + CENTRO[0] * sL, L.top + CENTRO[1] * sL];
+    const reta = [alvo[0] - ini.c[0], alvo[1] - ini.c[1]];
+    const n = Math.hypot(reta[0], reta[1]) || 1;
+    // chega ao logo subindo um pouco mais que a linha reta → arco
+    const dir = gira([reta[0] / n, reta[1] / n], reta[0] < 0 ? 28 : -28);
+    const D = M.pouso / picoPouso;                 // trecho final em que a curva de pouso dá 2 px de overshoot
+    const pre = [alvo[0] - dir[0] * D, alvo[1] - dir[1] * D];
+    const lambda = Math.max(0.45 * dist(ini.c, pre), 8);
+    const C = [pre[0] - dir[0] * lambda, pre[1] - dir[1] * lambda];
+    const Df = T.fim - T.assenta - T.voo;
+    const vAssenta = (arranquePouso * D) / T.assenta;          // velocidade com que o assentamento começa
+    const m = limita((vAssenta * Df) / (2 * lambda), 0, 1.4);  // o voo termina exatamente nessa velocidade
+    pouso = { ini, sL, alvo, dir, D, pre, C, Df, voo: curva([0.65, 0, 0.35, 1 - m * 0.65]) };
+  }
+  function pousando(t) {
+    const P = pouso;
+    if (P.semLogo) return P.ini;
+    if (t < T.voo + P.Df) {
+      const u = fase(t, T.voo, T.voo + P.Df);
+      const k = E.meio(u);
+      return { c: bq(P.ini.c, P.C, P.pre, P.voo(u)), r: mistura(P.ini.r, 0, k) - 7 * seno2(u), s: mistura(P.ini.s, P.sL, k) };
+    }
+    const k = E.pouso(fase(t, T.voo + P.Df, T.fim));
+    return { c: [P.pre[0] + P.dir[0] * P.D * k, P.pre[1] + P.dir[1] * P.D * k], r: 0, s: P.sL };
+  }
+
+  // Centro da borda: preso ao bico entre a pegada e a soltura; depois sobe sozinho
+  function yCentro(t) {
+    if (t <= T.pega) return yRepouso;
+    if (t <= T.solta) return Math.min(yRepouso, pontaY(t));
+    return mistura(yTopo, ySai, E.meio(fase(t, T.solta, T.cortinaSai)));
+  }
+  // Borda em x: as pontas repetem o centro com atraso (tecido leve) → arco
+  function yBorda(x, t) {
+    if (t <= T.pega) return yRepouso;
+    const u = limita(Math.abs(x - W / 2) / (W / 2 + M.margem), 0, 1);
+    const w = Math.pow(u, 1.7);
+    const yc = yCentro(t);
+    const cap = 1.25 * limita(W * M.arco, M.arcoMin, M.arcoMax);
+    let y = yc + cap * Math.tanh((yCentro(t - atrasoMax * w) - yc) / cap);
+    y += M.franzido * w * suave(fase(t, T.pega, T.puxadinha)) * (1 - suave(fase(t, T.respira, T.respira + 0.3)));
+    if (t > T.solta) { // pequena ondulação quando ele solta
+      const tau = t - T.solta;
+      y += onda * Math.exp(-tau / 0.11) * suave(fase(tau, 0, 0.05)) * Math.sin(2 * Math.PI * ((1.5 * x) / W) - (2 * Math.PI * tau) / 0.2);
+    }
+    return Math.min(yRepouso, y);
+  }
+
+  // Asas: 3 poses trocando a cada ~30 ms + asa fantasma translúcida.
+  // No pouso desaceleram (35 → 45 → 50 ms) e fecham na pose de repouso antes de virar o logo.
+  function asasEm(t) {
+    const rapido = T.fim - T.assenta - 0.19;
+    if (t < rapido) {
+      const i = Math.floor(t / T.batida);
+      const op = 0.22 * (1 - suave(fase(t, rapido - 0.05, rapido + 0.02)));
+      return [CICLO[i % 4], CICLO[(i + 3) % 4], CICLO[(i + 3) % 4], CICLO[(i + 2) % 4], op];
+    }
+    const k = t - rapido;
+    const f = k < 0.035 ? 1 : k < 0.08 ? 2 : k < 0.13 ? 1 : 0;
+    const tr = k < 0.045 ? 1 : k < 0.09 ? 2 : k < 0.14 ? 1 : 0;
+    return [f, tr, -1, -1, 0];
+  }
+
+  /* ---------- Desenho do quadro ------------------------------------------- */
+  function desenhar(t) {
+    let e;
+    if (t < T.chegada) e = naEntrada(t);
+    else if (t < T.solta) e = segurando(t);
+    else if (t < T.voo) e = solto(t);
+    else {
+      if (!pouso) planejarPouso();
+      e = pousando(t);
+      if (pouso.semLogo) el.ceu.style.opacity = String(1 - suave(fase(t, T.voo, T.fim)));
+    }
+    el.passaro.setAttribute('transform',
+      `translate(${r2(e.c[0])} ${r2(e.c[1])}) rotate(${r2(e.r)}) scale(${Math.round(e.s * 1e4) / 1e4}) translate(${-CENTRO[0]} ${-CENTRO[1]})`);
+    desenharAsas(t);
+    desenharRastro(t);
+    desenharBorda(t);
+    el.nome.setAttribute('transform', `translate(0 ${r1(M.nome * (yCentro(t) - yRepouso))})`);
+    revelarTopo(t);
+  }
+
+  function desenharAsas(t) {
+    const [f, tr, ff, ft, op] = asasEm(t);
+    const chave = `${f}${tr}${ff}${ft}${op.toFixed(2)}`;
+    if (chave === asasAntes) return;
+    asasAntes = chave;
+    el.frente.forEach((p, i) => { p.style.opacity = i === f ? 1 : i === ff ? op : 0; });
+    el.tras.forEach((p, i) => { p.style.opacity = i === tr ? 1 : i === ft ? op : 0; });
+  }
+
+  function desenharRastro(t) {
+    const cab = pEntrada(fase(t - 0.04, 0, T.chegada));
+    const cau = pEntrada(fase(t - T.rastro, 0, T.chegada));
+    if (t > T.chegada + T.rastro || cab - cau < 0.002) {
+      if (rastroLigado) { el.rastro.setAttribute('d', ''); rastroLigado = false; }
+      return;
+    }
+    // sub-curva [0, cab]: os pontinhos ficam parados no lugar, só o degradê anda
+    const q1 = [mistura(P0[0], C0[0], cab), mistura(P0[1], C0[1], cab)];
+    const q2 = bq(P0, C0, P2, cab);
+    const a = bq(P0, C0, P2, cau);
+    el.rastro.setAttribute('d', `M${r1(P0[0])} ${r1(P0[1])}Q${r1(q1[0])} ${r1(q1[1])} ${r1(q2[0])} ${r1(q2[1])}`);
+    el.rastroCor.setAttribute('x1', r1(a[0])); el.rastroCor.setAttribute('y1', r1(a[1]));
+    el.rastroCor.setAttribute('x2', r1(q2[0])); el.rastroCor.setAttribute('y2', r1(q2[1]));
+    rastroLigado = true;
+  }
+
+  // Um único path para a curva: preenche a cortina, recorta o nome, desenha fio e sombra
+  function desenharBorda(t) {
+    const N = 24, x0 = -M.margem, larg = W + 2 * M.margem, topo = -2 * H;
+    const P = [];
+    for (let i = 0; i <= N; i++) { const x = x0 + (larg * i) / N; P.push([x, yBorda(x, t)]); }
+    let d = `M${x0} ${topo}L${r1(P[0][0])} ${r1(P[0][1])}`;
+    for (let i = 0; i < N; i++) { // Catmull-Rom → Bézier: curva lisa passando pelos pontos
+      const a = P[i ? i - 1 : 0], b = P[i], c = P[i + 1], e = P[i + 2 <= N ? i + 2 : N];
+      d += `C${r1(b[0] + (c[0] - a[0]) / 6)} ${r1(b[1] + (c[1] - a[1]) / 6)} ${r1(c[0] - (e[0] - b[0]) / 6)} ${r1(c[1] - (e[1] - b[1]) / 6)} ${r1(c[0])} ${r1(c[1])}`;
+    }
+    d += `L${r1(x0 + larg)} ${topo}Z`;
+    if (d === ultimoD) return;
+    ultimoD = d;
+    el.bordas.forEach((p) => p.setAttribute('d', d));
+  }
+
+  // Elementos do topo sobem de leve quando a borda passa por eles (de baixo para cima)
+  function medirTopo() {
+    sobem = [...document.querySelectorAll(`[${CHAVE_SOBE}]`)]
+      .map((elemento) => ({ elemento, r: elemento.getBoundingClientRect(), foi: false }))
+      .filter((o) => o.r.width > 0 && o.r.top < H);
+  }
+  function revelarTopo(t) {
+    if (t <= T.pega) return;
+    let fila = 0;
+    for (const o of sobem) {
+      if (o.foi) continue;
+      if (yBorda(limita(W / 2, o.r.left, o.r.right), t) > o.r.bottom + 28) continue;
+      o.foi = true;
+      o.elemento.animate([{ translate: `0 ${M.sobe}px` }, { translate: '0 0' }], {
+        duration: 700 / vel, delay: (45 * fila++) / vel, easing: cssCurva(CURVA.entrada), fill: 'backwards',
+      });
+    }
+  }
+
+  /* ---------- Medidas da tela ---------------------------------------------- */
+  function medir() {
+    W = camada.clientWidth;
+    H = camada.clientHeight;
+    tam = limita(Math.min(W, H) * M.passaro[1], M.passaro[0], M.passaro[2]);
+    esc = tam / 100;
+    yRepouso = H + 1;
+    yTopo = H * M.topo;
+    ySai = -H * 0.6;
+    onda = limita(W * M.onda[1], M.onda[0], M.onda[2]);
+    P2 = centroPelaPonta([W / 2, yRepouso - 4], M.inclina, esc);
+    P0 = [-W * 0.2 - tam, H * 0.5]; // começa fora da tela: o trecho rápido da curva acontece antes de aparecer
+    C0 = [W * 0.3, mistura(P0[1], P2[1], 0.04)];
+    pEntrada = comOvershoot(E.entrada, M.freio / (2 * dist(C0, P2)), 0.55);
+    let vPico = 1; // velocidade máxima da puxada → atraso das pontas que dá o arco desejado
+    for (let i = 0; i < 80; i++) {
+      const a = mistura(T.respira, T.solta, i / 80);
+      vPico = Math.max(vPico, Math.abs(yCentro(a + 0.002) - yCentro(a)) / 0.002);
+    }
+    atrasoMax = limita(W * M.arco, M.arcoMin, M.arcoMax) / vPico;
+    medirTopo();
+    pouso = null;
+  }
+
+  /* ---------- Ciclo de vida ------------------------------------------------- */
+  function passo(agora) {
+    if (estado !== 'rodando') return;
+    if (!t0) {
+      t0 = agora;
+      el.iniciais.forEach((n) => n.remove()); // a partir daqui a cortina é o path
+    }
+    const t = ((agora - t0) / 1000) * vel;
+    const tEntrega = T.fim - T.assenta;
+    try {
+      if (camada.clientWidth !== W || camada.clientHeight !== H) medir();
+      if (t >= tEntrega && logo && pouso && !pouso.semLogo) return entregar(t - tEntrega);
+      if (t >= T.fim) return concluir();
+      desenhar(t);
+      raf = requestAnimationFrame(passo);
+    } catch (erro) {
+      concluir();
+      throw erro;
+    }
+  }
+
+  // FLIP, troca invisível: o pássaro chega ao logo com a pose e o tamanho exatos, ainda em
+  // movimento; no mesmo quadro o logo real aparece exatamente onde ele está e faz sozinho os
+  // últimos px com a curva de pouso. Em repouso fica só o logo real, desenhado pelo navegador.
+  function entregar(decorrido) {
+    const L = logo.getBoundingClientRect();
+    const sL = L.width / 100;
+    const dx = pouso.pre[0] - (L.left + CENTRO[0] * sL);
+    const dy = pouso.pre[1] - (L.top + CENTRO[1] * sL);
+    // anima o <g> de dentro do logo (redesenhado nítido a cada quadro, sem borrão de camada da GPU);
+    // no fim a animação acaba e sobra o logo exatamente como ele é desenhado sem abertura
+    const g = logo.querySelector('g');
+    if (g && g.animate) {
+      const a = g.animate([{ transform: `translate(${r2(dx / sL)}px, ${r2(dy / sL)}px)` }, { transform: 'none' }], {
+        duration: (T.assenta * 1000) / vel, easing: cssCurva(CURVA.pouso), fill: 'backwards',
+      });
+      a.currentTime = (Math.min(decorrido, T.assenta) * 1000) / vel;
+    }
+    concluir();
+  }
+
+  function esperarFonte() {
+    const fontes = document.fonts;
+    if (!fontes || !fontes.check) return Promise.resolve();
+    const fonte = `italic 300 64px ${getComputedStyle(el.nomeTexto).fontFamily}`;
+    try { if (fontes.check(fonte, 'Maria Luiza')) return Promise.resolve(); } catch (e) { return Promise.resolve(); }
+    camada.classList.add('ab-esperando-fonte');
+    fonteOk = false;
+    const carregou = fontes.load(fonte, 'Maria Luiza').then(() => {
+      if (estado !== 'esperando') return; // chegou tarde: o nome fica escondido nesta abertura
+      fonteOk = true;
+      camada.classList.remove('ab-esperando-fonte'); // aparece com fade de 250 ms
+      return pausa(90);
+    }, () => {});
+    return Promise.race([carregou, pausa(T.fonte * 1000)]);
+  }
+
+  // Se o JS começou tarde, empurra a rede de segurança do CSS para depois do fim previsto
+  function adiarSeguranca() {
+    const resto = (T.fonte + T.fim / vel + 0.8) * 1000;
+    [camada, logo].forEach((alvo) => {
+      if (!alvo || !alvo.getAnimations) return;
+      alvo.getAnimations().forEach((a) => {
+        if (!a.animationName || a.animationName.indexOf('ab-') !== 0) return;
+        const decorrido = Number(a.currentTime) || 0;
+        if (decorrido + resto > 4000) alvo.style.animationDelay = `${Math.ceil(decorrido + resto)}ms`;
+      });
+    });
+  }
+
+  const PULAR_EM = ['pointerdown', 'touchstart', 'wheel', 'keydown'];
+  function aoRolar() { if (Math.abs(window.scrollY - rolagemInicial) > 2) pular(); }
+  function aoEsconder() { if (document.hidden) concluir(); }
+  function ouvir(liga) {
+    const f = liga ? 'addEventListener' : 'removeEventListener';
+    PULAR_EM.forEach((ev) => window[f](ev, pular, { capture: true, passive: true }));
+    window[f]('scroll', aoRolar, { passive: true });
+    document[f]('visibilitychange', aoEsconder);
+  }
+
+  function iniciar() {
+    camada = document.getElementById('abertura');
+    if (!camada || !html.classList.contains('intro')) return;
+    const q = (s) => camada.querySelector(s);
+    el = {
+      ceu: q('.ab-ceu'),
+      passaro: q('.ab-passaro'),
+      frente: [...camada.querySelectorAll('.ab-asa-frente path')],
+      tras: [...camada.querySelectorAll('.ab-asa-tras path')],
+      rastro: q('.ab-rastro'),
+      rastroCor: q('#ab-rastro-cor'),
+      bordas: [...camada.querySelectorAll('[data-borda]')],
+      iniciais: [...camada.querySelectorAll('.ab-inicial')],
+      nome: q('.ab-nome-grupo'),
+      nomeTexto: q('.ab-nome'),
+    };
+    logo = document.querySelector('[data-abertura-logo]');
+    estado = 'esperando';
+    t0 = 0; pouso = null; ultimoD = ''; asasAntes = ''; rastroLigado = false;
+    rolagemInicial = window.scrollY;
+    ouvir(true);
+    adiarSeguranca();
+    esperarFonte().then(() => {
+      if (estado !== 'esperando') return;
+      estado = 'rodando';
+      medir();
+      raf = requestAnimationFrame(passo);
+    });
+  }
+
+  // O toque/clique que pulou não pode "atravessar" e acionar o link que estava embaixo
+  // da cortina (no celular o clique chega depois que o dedo sai, com a cortina já indo embora)
+  function engolirClique() {
+    const prazo = performance.now() + 800;
+    const engole = (ev) => {
+      window.removeEventListener('click', engole, true);
+      if (performance.now() > prazo) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+    };
+    window.addEventListener('click', engole, true);
+    setTimeout(() => window.removeEventListener('click', engole, true), 800);
+  }
+
+  // Clique, toque, rolagem ou tecla: vai direto ao estado final com uma saída rápida
+  function pular(ev) {
+    if (estado !== 'rodando' && estado !== 'esperando') return;
+    if (ev && (ev.type === 'pointerdown' || ev.type === 'touchstart')) engolirClique();
+    estado = 'saindo';
+    cancelAnimationFrame(raf);
+    ouvir(false);
+    camada.style.pointerEvents = 'none';
+    const dur = T.pular * 1000;
+    if (logo) {
+      logo.style.visibility = 'visible';
+      logo.style.animation = 'none';
+      logo.animate([{ opacity: 0 }, { opacity: 1 }], { duration: dur, easing: 'ease-out' });
+    }
+    camada.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-12px)' }], {
+      duration: dur, easing: cssCurva(CURVA.entrada), fill: 'forwards',
+    }).finished.then(concluir, concluir);
+    setTimeout(concluir, dur + 150); // garantia
+  }
+
+  function concluir() {
+    if (estado === 'fim' || estado === 'parado') return;
+    estado = 'fim';
+    cancelAnimationFrame(raf);
+    ouvir(false);
+    html.classList.remove('intro'); // o logo real aparece…
+    if (logo) ['visibility', 'opacity', 'animation', 'animation-delay'].forEach((p) => logo.style.removeProperty(p));
+    camada.remove();                // …e a camada sai do DOM, no mesmo quadro
+    try { if ('scrollRestoration' in history) history.scrollRestoration = 'auto'; } catch (e) {}
+  }
+
+  // Rever (botão da demo, ou no console: abertura.tocar() · abertura.tocar(0.25) em câmera lenta)
+  function tocar(velocidade) {
+    if (!molde || estado === 'rodando' || estado === 'esperando' || estado === 'saindo') return;
+    vel = lerVel(velocidade);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    document.body.prepend(molde.cloneNode(true));
+    html.classList.add('intro');
+    iniciar();
+  }
+
+  window.abertura = { tocar, pular };
+  if (camada && html.classList.contains('intro')) iniciar();
+  else if (camada) camada.remove(); // visitas seguintes: a camada nem fica no DOM
+})();
+</script>
+<script>
+/* ==========================================================================
+   MENU AO ROLAR — vira pílula depois de ~100 px de rolagem.
+   Detecção por IntersectionObserver (nada de listener de scroll).
+   Logo, links e WhatsApp deslizam com FLIP (só transform); o fundo
+   muda de forma com clip-path no CSS.
+   ========================================================================== */
+(() => {
+  'use strict';
+  const LIMITE = 100;                              // px de rolagem para virar pílula
+  const DUR = 420;                                 // ms (igual a --menu-dur)
+  const EASE = 'cubic-bezier(0.65, 0, 0.35, 1)';   // igual a --menu-ease
+
+  const menu = document.querySelector('[data-menu]');
+  if (!menu || !('IntersectionObserver' in window)) return;
+  const moveis = [...menu.querySelectorAll('[data-menu-flip]')];
+  const animacoes = new Map();
+  const reduzir = matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Ponto de referência de cada peça: data-menu-flip="fim" mede pela borda direita
+  // (o grupo links + WhatsApp muda de largura, mas o WhatsApp fica sempre na ponta)
+  const ponto = (el) => {
+    const r = el.getBoundingClientRect();
+    return { x: el.dataset.menuFlip === 'fim' ? r.right : r.left, y: r.top + r.height / 2, w: r.width };
+  };
+
+  // Sentinela invisível nos primeiros 100 px da página
+  const sentinela = document.createElement('div');
+  sentinela.setAttribute('aria-hidden', 'true');
+  sentinela.style.cssText = `position:absolute;top:0;left:0;width:1px;height:${LIMITE}px;pointer-events:none;visibility:hidden`;
+  document.body.prepend(sentinela);
+
+  let primeiraVez = true;
+  new IntersectionObserver(([registro]) => {
+    const pilula = !registro.isIntersecting;
+    const animar = !primeiraVez && !reduzir.matches;
+    primeiraVez = false;
+    if (pilula !== menu.classList.contains('menu--pilula')) trocar(pilula, animar);
+  }).observe(sentinela);
+
+  function trocar(pilula, animar) {
+    if (!animar) {
+      animacoes.forEach((a) => a.cancel());
+      menu.classList.toggle('menu--pilula', pilula);
+      return;
+    }
+    // FLIP: mede onde está (inclusive no meio de uma animação), troca, mede de novo, anima a diferença
+    const antes = moveis.map(ponto);
+    animacoes.forEach((a) => a.cancel());
+    animacoes.clear();
+    menu.classList.toggle('menu--pilula', pilula);
+    moveis.forEach((el, i) => {
+      const depois = ponto(el);
+      const dx = antes[i].x - depois.x;
+      const dy = antes[i].y - depois.y;
+      if (!depois.w || (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5)) return;
+      animacoes.set(el, el.animate([{ translate: `${dx}px ${dy}px` }, { translate: '0 0' }], { duration: DUR, easing: EASE }));
+    });
+  }
+})();
+</script>
+<script>
+  /* Só da demonstração */
+  document.querySelector('[data-demo="rever"]').addEventListener('click', () => window.abertura && window.abertura.tocar());
+  document.querySelectorAll('[data-demo="lento"]').forEach((b) =>
+    b.addEventListener('click', () => window.abertura && window.abertura.tocar(Number(b.dataset.vel))));
+  document.querySelector('[data-demo="esquecer"]').addEventListener('click', (ev) => {
+    try { localStorage.removeItem('ml-abertura-vista'); } catch (e) {}
+    ev.currentTarget.textContent = 'Pronto, recarregue';
+  });
+</script>
+</body>
+</html>

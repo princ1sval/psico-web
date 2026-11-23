@@ -1,0 +1,94 @@
+<!-- 2) Cole no <head>, inline, logo depois do trecho 1 (antes de qualquer CSS externo).
+     Carrega a fonte do nome com display=block: ela nunca troca no meio da animação
+     (o JS ainda espera até 0,6 s por ela; se não chegar, o nome não aparece nessa abertura). -->
+<!-- Melhor ainda: hospede o .woff2 do Cormorant Garamond 300 itálico no site e pré-carregue: -->
+<!-- <link rel="preload" href="/fontes/cormorant-garamond-300-italic.woff2" as="font" type="font/woff2" crossorigin> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&display=block">
+<style>
+/* ==========================================================================
+   ABERTURA — camada por cima do site (CSS inline no <head>)
+   Só vale com html.intro. Sem a classe, a camada nem aparece.
+   ========================================================================== */
+:root {
+  --ab-cortina: #F8FAF1;   /* cor da cortina (off-white) */
+  --ab-traco: #3D4530;     /* traço do beija-flor e cor do nome (verde-oliva) */
+  --ab-fio: #CDD3B6;       /* fio da borda: verde-sálvia (um tom acima do #DDE1C8 para aparecer sobre o off-white) */
+  --ab-sombra: #3D4530;    /* cor da sombra da borda (bem transparente, ver opacidades no HTML) */
+  --ab-fonte-nome: "Cormorant Garamond", "Cormorant", Garamond, Georgia, serif;
+  --ab-tamanho-nome: clamp(2.6rem, 2rem + 4vw, 5.6rem);
+  --ab-espera: 4s;         /* rede de segurança: se o JS falhar, a camada some sozinha depois disso */
+}
+
+#abertura { display: none; }
+
+html.intro #abertura {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000;
+  overflow: hidden;
+  contain: strict;
+  cursor: default;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  /* linear no total, para o último quadro ser exato (visibility: hidden de verdade) */
+  animation: ab-seguranca .35s linear var(--ab-espera) forwards;
+}
+
+#abertura svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  will-change: transform; /* cada SVG numa camada própria da GPU */
+}
+
+.ab-tecido { fill: var(--ab-cortina); }
+.ab-fio { fill: none; stroke: var(--ab-fio); stroke-width: 1.25px; stroke-linejoin: round; }
+.ab-sombra path { fill: none; stroke: var(--ab-sombra); stroke-linejoin: round; }
+
+.ab-nome {
+  fill: var(--ab-traco);
+  font-family: var(--ab-fonte-nome);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--ab-tamanho-nome);
+  letter-spacing: .01em;
+  transition: opacity .25s cubic-bezier(.16, 1, .3, 1);
+}
+#abertura.ab-esperando-fonte .ab-nome { opacity: 0; } /* nunca mostra a fonte reserva trocando no meio */
+
+.ab-passaro path {
+  fill: none;
+  stroke: var(--ab-traco);
+  stroke-width: 1.5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke; /* o traço fica com 1,5 px em qualquer tamanho */
+}
+.ab-rastro { fill: none; stroke-width: 1.5px; stroke-linecap: round; stroke-dasharray: 0 5; }
+
+/* O logo do menu já ocupa o lugar, invisível, até o beija-flor pousar nele */
+html.intro [data-abertura-logo] {
+  visibility: hidden;
+  animation: ab-logo-volta .35s ease-out var(--ab-espera) forwards;
+}
+
+/* Rede de segurança: some com fade e deixa de existir para o clique.
+   O "hidden" entra em 97% e fica até o fim: no Chrome, com atraso de 4 s, o progresso final
+   pode parar em 0,999999… (arredondamento) e um hidden só no 100% nunca seria aplicado. */
+@keyframes ab-seguranca {
+  0%   { opacity: 1; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+  96%  { opacity: 0; visibility: visible; }
+  97%, 100% { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+@keyframes ab-logo-volta {
+  from { visibility: visible; opacity: 0; }
+  to   { visibility: visible; opacity: 1; }
+}
+</style>

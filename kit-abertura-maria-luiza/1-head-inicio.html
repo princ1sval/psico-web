@@ -1,0 +1,21 @@
+<!-- 1) Cole como PRIMEIRO item do <head> (logo depois do <meta charset>) -->
+<script>
+  /* ABERTURA — decide, antes do primeiro paint, se a animação roda.
+     Põe a classe .intro no <html>; o CSS e o JS da abertura só agem com ela. */
+  (function () {
+    var html = document.documentElement;
+    var CHAVE = 'ml-abertura-vista';                         // flag da 1ª visita no localStorage
+    var forcar = /[?&]intro(?:[=&]|$)/.test(location.search); // ?intro força (para testar e mostrar)
+    try {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; // movimento reduzido: nunca roda
+      if (!forcar) {
+        if (localStorage.getItem(CHAVE)) return;           // já viu a abertura
+        if (location.hash) return;                         // chegou por link de seção (#contato…)
+        if (document.visibilityState === 'hidden') return; // aberta em aba de fundo
+        localStorage.setItem(CHAVE, '1');
+      }
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; // começa no topo
+      html.classList.add('intro');
+    } catch (e) { /* sem localStorage: não roda, para não repetir a cada visita */ }
+  })();
+</script>
