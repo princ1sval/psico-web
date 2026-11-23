@@ -5,10 +5,10 @@ Como usar: siga as fases em ordem. Em cada uma, cole o **prompt** no Claude Code
 ---
 
 ## Fase 0 — Preparação (você, fora do Claude Code)
-- [ ] Criar a pasta `psico-web/` e rodar `git init`
-- [ ] Colocar `CLAUDE.md` na raiz e `ROTEIRO.md` + `conteudo.md` em `docs/`
-- [ ] Copiar a pasta `kit-abertura-maria-luiza/` inteira para a raiz
-- [ ] Criar repositório **privado** no GitHub e fazer o primeiro push
+- [x] Criar a pasta `psico-web/` e rodar `git init`
+- [x] Colocar `CLAUDE.md` na raiz e `ROTEIRO.md` + `conteudo.md` em `docs/`
+- [x] Copiar a pasta `kit-abertura-maria-luiza/` inteira para a raiz
+- [x] Criar repositório **privado** no GitHub e fazer o primeiro push
 - [ ] Mandar para a Malu a lista de `docs/conteudo.md` (o que ela precisa enviar)
 - [ ] Definir com ela: domínio (ex.: `marialuizapsi.com.br`), quem registra e paga
 

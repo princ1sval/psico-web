@@ -9,3 +9,4 @@ desktop.ini
 
 # Configuração local do Claude Code
 .claude/settings.local.json
+.claude/launch.json
