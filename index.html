@@ -13,7 +13,13 @@
       try {
         if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; // movimento reduzido: nunca roda
         if (!forcar) {
-          if (location.hash) return;                         // chegou por link de seção (#duvidas…)
+          // recarregou: roda sempre, tirando o #seção que o clique no menu deixou no endereço.
+          // chegou por link de seção (#duvidas…): não roda, vai direto à seção
+          var nav = performance.getEntriesByType('navigation')[0];
+          if (location.hash) {
+            if (!nav || nav.type !== 'reload') return;
+            history.replaceState(history.state, '', location.pathname + location.search);
+          }
           if (document.visibilityState === 'hidden') return; // aberta em aba de fundo
         }
         if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; // começa no topo
@@ -211,8 +217,7 @@
           <a href="#como-funciona">Como funciona</a>
           <a href="#duvidas">Dúvidas</a>
         </nav>
-        <!-- [[PENDENTE: trocar #contato por https://wa.me/55NUMERO?text=... quando chegar o número]] -->
-        <a class="menu__whats" href="#contato" data-abertura-sobe>WhatsApp</a>
+        <a class="menu__whats" href="https://wa.me/5532987103005" target="_blank" rel="noopener" data-abertura-sobe>WhatsApp</a>
       </div>
     </div>
   </header>
@@ -228,8 +233,8 @@
         <h1 id="topo-titulo" data-abertura-sobe>Um lugar para ser e estar <em>como você quiser</em></h1>
         <p data-abertura-sobe>Psicoterapia com escuta orientada pela psicanálise, para crianças, adolescentes, adultos e idosos. Online ou presencial em Muriaé-MG.</p>
         <p data-abertura-sobe>
-          <a href="#contato">Conversar no WhatsApp</a>
-          <span class="pendente">[[PENDENTE: número do WhatsApp e mensagem pré-preenchida]]</span>
+          <a href="https://wa.me/5532987103005" target="_blank" rel="noopener">Conversar no WhatsApp</a>
+          <span class="pendente">[[PENDENTE: mensagem pré-preenchida do WhatsApp]]</span>
         </p>
         <p data-abertura-sobe><a href="#abordagem">Conhecer a abordagem</a></p>
         <p data-abertura-sobe><span class="pendente">[[PENDENTE: foto profissional do topo (vertical, boa resolução)]]</span></p>
@@ -413,8 +418,8 @@
         <h2 id="contato-titulo">Quando quiser, <em>estou por aqui</em></h2>
         <p>Me manda uma mensagem para tirar dúvidas ou combinar a nossa primeira conversa.</p>
         <p>
-          <a href="#contato">Conversar no WhatsApp</a>
-          <span class="pendente">[[PENDENTE: número do WhatsApp e mensagem pré-preenchida]]</span>
+          <a href="https://wa.me/5532987103005" target="_blank" rel="noopener">Conversar no WhatsApp</a>
+          <span class="pendente">[[PENDENTE: mensagem pré-preenchida do WhatsApp]]</span>
         </p>
         <ul>
           <li><a href="https://www.instagram.com/eumalumilani/" target="_blank" rel="noopener">@eumalumilani</a> <span class="pendente">[[PENDENTE: confirmar Instagram]]</span></li>
@@ -435,7 +440,7 @@
       <ul>
         <li><a href="#trajetoria">Currículo Lattes</a> <span class="pendente">[[PENDENTE: link do Lattes]]</span></li>
         <li><a href="https://www.instagram.com/eumalumilani/" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a href="#contato">WhatsApp</a></li>
+        <li><a href="https://wa.me/5532987103005" target="_blank" rel="noopener">WhatsApp</a></li>
       </ul>
       <p><small>Este site não é um canal de atendimento de emergência. Em situação de crise, ligue <a href="tel:188">188</a> (CVV) ou <a href="tel:192">192</a> (SAMU).</small></p>
       <p><small>© 2026 Maria Luiza Gonçalves Milani</small></p>
