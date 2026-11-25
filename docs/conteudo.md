@@ -9,7 +9,7 @@ Itens com **(esboço — confirmar)** já vieram do esboço do site: a Malu só 
 
 ## Contato
 - WhatsApp (com DDD): (32) 98710-3005 — link: https://wa.me/5532987103005
-- Mensagem pré-preenchida do WhatsApp (ex.: "Olá, Maria Luiza! Vi seu site e gostaria de saber mais sobre o atendimento."): [[PENDENTE]]
+- Mensagem pré-preenchida do WhatsApp: "Olá, Maria Luiza! Vi seu site e gostaria de saber mais sobre o atendimento." **(sugestão em uso no site — confirmar)**
 - Instagram: @eumalumilani **(esboço — confirmar)**
 - E-mail profissional: [[PENDENTE]] (o esboço usa marialugm26@gmail.com — é esse que deve aparecer?)
 - Cidade/região de atuação: Muriaé-MG **(esboço — confirmar)**

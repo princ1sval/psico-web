@@ -85,7 +85,7 @@
   --raio-m: 16px;
   --raio-g: 24px;
   --raio-pilula: 999px;
-  --raio-arco: 999px 999px var(--raio-g) var(--raio-g); /* foto em arco do topo */
+  --raio-arco: 200px 200px var(--raio-g) var(--raio-g); /* foto em arco do topo (até 400 px de largura; 999px achataria os cantos de baixo) */
 
   /* Sombras — mesma receita da pílula do menu */
   --sombra-suave: 0 12px 32px -16px rgb(61 69 48 / 0.30), 0 2px 8px -3px rgb(61 69 48 / 0.10);
