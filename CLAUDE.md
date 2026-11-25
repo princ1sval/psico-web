@@ -1,7 +1,7 @@
 # Site da Maria Luiza (Malu) — psicóloga
 
 ## O que é
-Site-vitrine de página única para **Maria Luiza**, psicóloga recém-formada (tem artigos publicados e participou de projetos de extensão). Objetivo: apresentar a profissional, transmitir acolhimento e confiança, e levar o visitante a **chamar no WhatsApp**.
+Site-vitrine de página única para **Maria Luiza**, psicóloga recém-formada (tem trabalhos apresentados em eventos e participou de projetos de extensão; ainda não tem artigos publicados). Objetivo: apresentar a profissional, transmitir acolhimento e confiança, e levar o visitante a **chamar no WhatsApp**.
 Desenvolvido por João Pedro (Princípio Web). Projeto interno: "psico web".
 
 ## Stack e restrições

@@ -13,7 +13,7 @@ Itens com **(esboço — confirmar)** já vieram do esboço do site: a Malu só 
 - Instagram: @eumalumilani **(esboço — confirmar)**
 - E-mail profissional: [[PENDENTE]] (o esboço usa marialugm26@gmail.com — é esse que deve aparecer?)
 - Cidade/região de atuação: Muriaé-MG **(esboço — confirmar)**
-- Currículo Lattes (link): [[PENDENTE]]
+- Currículo Lattes (link): https://lattes.cnpq.br/3861131205712376
 
 ## Atendimento
 - Modalidade: online (Google Meet ou Microsoft Teams) e presencial em Muriaé-MG **(esboço — confirmar)**
@@ -44,8 +44,11 @@ Itens com **(esboço — confirmar)** já vieram do esboço do site: a Malu só 
 
 ## Produção acadêmica
 - TCC: "A morte do outro e a perda do eu: o abalo narcísico diante de processos de luto à luz da teoria freudiana" **(esboço — confirmar)**
-- Eventos: 6 trabalhos apresentados (COPEX III, COPEX IV e O fazer psicanalítico, da UFJF), 3 deles premiados como melhores trabalhos **(esboço — confirmar)**
-- Artigos publicados (título, revista/evento, ano, link): [[PENDENTE]]
+- Trabalhos apresentados em eventos (enviados pela Malu; "3 premiados como melhores trabalhos" veio do esboço — confirmar quais):
+  - COPEX III: Entre cuidar e aprender: relato de experiência de um estágio extracurricular em psicologia hospitalar; Grupo terapêutico acolhendo com amor; Projeto de intervenção de estágio: "psicoeducação das emoções no setor de pediatria em um hospital oncológico"
+  - COPEX IV: Relato de experiência de alunos na participação de um grupo de ouvidores de vozes em saúde mental; Escuta das mães de crianças em tratamento oncológico: repercussões na identidade feminina
+  - O fazer psicanalítico (UFJF): O abalo narcísico diante dos processos de luto à luz da teoria freudiana
+- Artigos publicados: ainda não tem (o site não menciona artigos)
 - Projetos de extensão **(esboço — confirmar; falta o período de cada um)**: grupos terapêuticos com pacientes oncológicos, com familiares e com mães de crianças em tratamento; atividades lúdicas com crianças internadas; arteterapia com colaboradores de hospital; Se liga psi.
 
 ## Dúvidas frequentes
