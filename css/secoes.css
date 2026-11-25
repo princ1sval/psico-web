@@ -117,3 +117,117 @@
     gap: var(--esp-7);
   }
 }
+
+/* ---------- Peças comuns -------------------------------------------------- */
+.icone {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.cabecalho-centro { text-align: center; }
+.cabecalho-centro > p { margin-inline: auto; }
+
+/* ---------- Abordagem ----------------------------------------------------- */
+.abordagem__grade { display: grid; gap: var(--esp-7); align-items: center; }
+.abordagem__foto { justify-self: center; width: min(100%, 360px); }
+.abordagem__foto img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--raio-g);
+}
+@media (min-width: 761px) {
+  .abordagem__grade { grid-template-columns: 1.25fr 1fr; gap: var(--esp-8); }
+  .abordagem__foto { justify-self: end; }
+}
+
+/* ---------- Para quem ----------------------------------------------------- */
+/* sobre o sálvia a terracota fica no limite do AA: aqui os destaques são oliva */
+#ajuda .sobretitulo, #ajuda h2 em { color: var(--cor-oliva); }
+.ajuda__grade { display: grid; gap: var(--esp-6); align-items: center; }
+.etiquetas { display: flex; flex-wrap: wrap; gap: var(--esp-2); }
+.fluxo > .etiquetas { margin-top: var(--esp-5); }
+.etiquetas li {
+  padding: var(--esp-2) var(--esp-4);
+  border-radius: var(--raio-pilula);
+  background: var(--cor-offwhite);
+  font-size: var(--fs-pequeno);
+  font-weight: var(--peso-forte);
+}
+@media (min-width: 761px) {
+  .ajuda__grade { grid-template-columns: 1fr 1fr; gap: var(--esp-8); }
+}
+
+/* ---------- Como funciona ------------------------------------------------- */
+.passos {
+  display: grid;
+  gap: var(--esp-4);
+  margin-top: var(--esp-6);
+  counter-reset: passo;
+}
+.passo {
+  position: relative;
+  padding: var(--esp-5);
+  border-radius: var(--raio-m);
+  background: var(--cor-bege);
+  counter-increment: passo;
+}
+.passo::before {
+  content: counter(passo, decimal-leading-zero);
+  display: inline-block;
+  padding: var(--esp-1) var(--esp-3);
+  border-radius: var(--raio-pilula);
+  background: var(--cor-oliva);
+  color: var(--cor-offwhite);
+  font-size: var(--fs-sobretitulo);
+  font-weight: var(--peso-titulo);
+  line-height: 1.5;
+}
+.passo .icone { position: absolute; top: var(--esp-5); right: var(--esp-5); color: var(--cor-destaque); }
+.passo h3 {
+  margin-top: var(--esp-4);
+  padding-bottom: var(--esp-3);
+  border-bottom: 1px solid var(--cor-linha);
+}
+.passo p { margin-top: var(--esp-3); font-size: var(--fs-pequeno); }
+.informes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--esp-3) var(--esp-7);
+  margin-top: var(--esp-4);
+  padding: var(--esp-4) var(--esp-5);
+  border-radius: var(--raio-g);
+  background: var(--cor-salvia);
+  font-size: var(--fs-pequeno);
+  font-weight: var(--peso-forte);
+}
+.informes li { display: flex; align-items: center; gap: var(--esp-3); }
+.nota-pendente { margin-top: var(--esp-4); }
+@media (min-width: 600px) { .passos { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .passos { grid-template-columns: repeat(4, 1fr); } }
+
+/* ---------- Citação ------------------------------------------------------- */
+.citacao { background: var(--cor-oliva); color: var(--cor-offwhite); text-align: center; }
+.citacao__estrela { width: 24px; height: 24px; margin-inline: auto; fill: var(--cor-terracota-clara); }
+.citacao blockquote p {
+  max-width: 22em;
+  margin: var(--esp-5) auto;
+  font-family: var(--fonte-serifa);
+  font-style: italic;
+  font-size: var(--fs-h2);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.citacao figcaption {
+  color: var(--cor-salvia);
+  font-size: var(--fs-sobretitulo);
+  font-weight: var(--peso-medio);
+  letter-spacing: var(--espaco-letra-sobretitulo);
+  text-transform: uppercase;
+}
