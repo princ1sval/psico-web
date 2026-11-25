@@ -8,7 +8,7 @@ Itens com **(esboço — confirmar)** já vieram do esboço do site: a Malu só 
 - Número do CRP (com a região, ex.: CRP 04/00000): CRP 04/[[PENDENTE]]
 
 ## Contato
-- WhatsApp (com DDD): [[PENDENTE]]
+- WhatsApp (com DDD): (32) 98710-3005 — link: https://wa.me/5532987103005
 - Mensagem pré-preenchida do WhatsApp (ex.: "Olá, Maria Luiza! Vi seu site e gostaria de saber mais sobre o atendimento."): [[PENDENTE]]
 - Instagram: @eumalumilani **(esboço — confirmar)**
 - E-mail profissional: [[PENDENTE]] (o esboço usa marialugm26@gmail.com — é esse que deve aparecer?)
@@ -62,8 +62,14 @@ Ainda sem resposta:
 - Emite recibo para reembolso? [[PENDENTE]]
 
 ## Imagens
-- Foto profissional para o topo (boa resolução, de preferência vertical e horizontal): [[PENDENTE]] (o esboço usa fotos dela; enviar os arquivos originais)
-- Fotos para o Sobre, a Trajetória e o Contato: [[PENDENTE]]
+- Foto profissional para o topo (boa resolução, de preferência vertical e horizontal): recebida (`retrato-vitral.jpg`, a mesma do esboço)
+- Fotos recebidas, em `docs/fotos-originais/` (não são publicadas; as versões do site vão para `assets/img/`):
+  - `retrato-vitral.jpg` — topo
+  - `mirante-horizontal.jpg` — sugestão: Sobre (a do esboço, com a árvore, não veio)
+  - `canudo-psicologia.jpg` — Trajetória
+  - `janela-cafe.jpg` — Contato
+  - `mandala.jpg`, `marcador-freud.jpg`, `lapis-escutar.jpg` — apoio, uso a definir
+  - `jaleco.jpg` — aparecem outras pessoas: recortar ou confirmar autorização antes de usar
 
 ## Autorizações
 - Pode ter o crédito discreto "Site por Princípio Web" no rodapé? [[PENDENTE]]
