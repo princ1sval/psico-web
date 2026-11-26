@@ -40,7 +40,7 @@ Itens com **(esboço — confirmar)** já vieram do esboço do site: a Malu só 
   - 1 ano de estágio em clínica-escola
   - Liga acadêmica e grupos de estudo em psicanálise
   - Cursos e pós: [[PENDENTE]]
-- Citação para o site: "A psicanálise é, em sua essência, uma cura pelo amor." — Sigmund Freud, em carta a Jung (1906) **(esboço — confirmar)**
+- Citação para o site: "A psicanálise é, em sua essência, uma cura pelo amor." — Sigmund Freud, em carta a Jung (1906) **(confirmado — João decidiu manter como está)**
 
 ## Produção acadêmica
 - TCC: "A morte do outro e a perda do eu: o abalo narcísico diante de processos de luto à luz da teoria freudiana" **(confirmado)**
@@ -71,6 +71,7 @@ Respostas **(confirmadas)**:
   - `canudo-psicologia.jpg` — Trajetória
   - `janela-cafe.jpg` — Contato
   - `mandala.jpg`, `marcador-freud.jpg`, `lapis-escutar.jpg` — apoio, uso a definir
+  - Desenho do marcador (Freud): feito e pintado pela própria Malu; pode aparecer no site (confirmado)
   - `jaleco.jpg` — aparecem outras pessoas: recortar ou confirmar autorização antes de usar
 
 ## Autorizações
