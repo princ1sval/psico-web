@@ -420,3 +420,33 @@
     stroke-linejoin: round;
   }
 }
+
+
+/* ==========================================================================
+   PÁGINA 404 (404.html)
+   ========================================================================== */
+.erro__principal {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  align-items: center;
+  padding-block: var(--esp-7);
+}
+.erro__conteudo { max-width: 36rem; }
+.erro__marca {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  color: var(--cor-oliva);
+  text-decoration: none;
+  margin-bottom: var(--esp-6);
+}
+.erro__marca:focus-visible { border-radius: var(--raio-p); }
+.erro__logo { width: 44px; height: 44px; }
+.erro__nome {
+  font-family: var(--fonte-serifa);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.6rem;
+}
+.erro__conteudo > .acoes { margin-top: var(--esp-6); }

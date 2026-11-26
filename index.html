@@ -120,10 +120,65 @@
   <title>Maria Luiza Gonçalves Milani · Psicóloga em Muriaé-MG</title>
   <meta name="description" content="Psicoterapia com escuta orientada pela psicanálise, para crianças, adolescentes, adultos e idosos. Atendimento online ou presencial em Muriaé-MG.">
   <meta name="theme-color" content="#F8FAF1">
-  <!-- [[PENDENTE: remover o noindex na Fase 8, quando o domínio final e o conteúdo estiverem prontos]] -->
+  <!-- [[PENDENTE: remover o noindex quando o CRP estiver no site (sem CRP não pode aparecer no Google)]] -->
   <meta name="robots" content="noindex, nofollow">
+  <!-- Endereço do site: ao trocar pelo domínio final, buscar "psico-web.jp-princisval.workers.dev"
+       e substituir aqui, no JSON-LD abaixo, em robots.txt e em sitemap.xml -->
+  <link rel="canonical" href="https://psico-web.jp-princisval.workers.dev/">
+  <!-- Prévia do link (WhatsApp, Instagram, Facebook, X) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Maria Luiza · Psicóloga">
+  <meta property="og:title" content="Maria Luiza Gonçalves Milani · Psicóloga em Muriaé-MG">
+  <meta property="og:description" content="Psicoterapia com escuta orientada pela psicanálise, para crianças, adolescentes, adultos e idosos. Online ou presencial em Muriaé-MG.">
+  <meta property="og:url" content="https://psico-web.jp-princisval.workers.dev/">
+  <meta property="og:image" content="https://psico-web.jp-princisval.workers.dev/assets/img/compartilhar.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Maria Luiza Gonçalves Milani, psicóloga em Muriaé-MG, sorrindo com a mão no queixo">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Dados estruturados para o Google: só informações confirmadas em docs/conteudo.md.
+       Quando o CRP chegar, incluir em "Person": "identifier": "CRP 04/número" -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://psico-web.jp-princisval.workers.dev/#maria-luiza",
+        "name": "Maria Luiza Gonçalves Milani",
+        "jobTitle": "Psicóloga",
+        "url": "https://psico-web.jp-princisval.workers.dev/",
+        "image": "https://psico-web.jp-princisval.workers.dev/assets/img/compartilhar.jpg",
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "FAMINAS Muriaé" },
+        "knowsAbout": ["Psicologia", "Psicanálise", "Psicoterapia"],
+        "sameAs": [
+          "https://www.instagram.com/eumalumilani/",
+          "https://lattes.cnpq.br/3861131205712376"
+        ]
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://psico-web.jp-princisval.workers.dev/#atendimento",
+        "name": "Maria Luiza Gonçalves Milani · Psicóloga",
+        "description": "Psicoterapia com escuta orientada pela psicanálise, para crianças, adolescentes, adultos e idosos. Online ou presencial em Muriaé-MG.",
+        "url": "https://psico-web.jp-princisval.workers.dev/",
+        "image": "https://psico-web.jp-princisval.workers.dev/assets/img/compartilhar.jpg",
+        "telephone": "+55 32 98710-3005",
+        "email": "marialugm26@gmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Muriaé", "addressRegion": "MG", "addressCountry": "BR" },
+        "areaServed": [
+          { "@type": "City", "name": "Muriaé" },
+          { "@type": "Country", "name": "Brasil" }
+        ],
+        "founder": { "@id": "https://psico-web.jp-princisval.workers.dev/#maria-luiza" },
+        "sameAs": ["https://www.instagram.com/eumalumilani/"]
+      }
+    ]
+  }
+  </script>
   <link rel="preload" href="assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/cormorant-garamond-latin-wght-italic.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Kit, trecho 8 — favicons na raiz -->
   <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
