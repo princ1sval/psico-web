@@ -316,3 +316,103 @@
   .duvidas__grade { grid-template-columns: 1fr 1.6fr; gap: var(--esp-8); }
   .duvidas__cabecalho { position: sticky; top: var(--deslocamento-ancora); }
 }
+
+/* ---------- Contato ------------------------------------------------------- */
+.contato__grade { display: grid; gap: var(--esp-7); align-items: center; }
+.contato__foto { justify-self: center; width: min(100%, 360px); }
+.contato__foto img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--raio-arco);
+}
+.contatos { display: grid; gap: var(--esp-3); }
+.fluxo > .contatos { margin-top: var(--esp-6); }
+.contatos li {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  padding-top: var(--esp-3);
+  border-top: 1px solid var(--cor-linha);
+  font-size: var(--fs-pequeno);
+  font-weight: var(--peso-forte);
+}
+.contatos .icone { color: var(--cor-destaque); }
+.contatos a { font-weight: var(--peso-texto); }
+@media (min-width: 761px) {
+  .contato__grade { grid-template-columns: 1fr 1.25fr; gap: var(--esp-8); }
+  .contato__foto { justify-self: start; }
+}
+
+/* ---------- Rodapé -------------------------------------------------------- */
+.rodape {
+  padding-block: var(--esp-7) var(--esp-6);
+  background: var(--cor-oliva);
+  color: var(--cor-offwhite);
+  font-size: var(--fs-pequeno);
+}
+.rodape a:hover { color: var(--cor-terracota-clara); }
+.rodape :focus-visible { outline-color: var(--cor-terracota-clara); }
+.rodape .pendente { background: var(--cor-offwhite); }
+.rodape__grade { display: grid; gap: var(--esp-5); }
+.rodape__nome {
+  font-family: var(--fonte-serifa);
+  font-style: italic;
+  font-size: var(--fs-destaque);
+  line-height: 1.3;
+}
+.rodape__links { display: flex; flex-wrap: wrap; gap: var(--esp-2) var(--esp-5); }
+.rodape__links a { display: inline-block; padding-block: var(--esp-2); font-weight: var(--peso-forte); }
+.rodape__aviso {
+  max-width: none;
+  margin-top: var(--esp-6);
+  padding: var(--esp-4) var(--esp-5);
+  border-radius: var(--raio-m);
+  background: rgb(248 250 241 / 0.08);
+}
+.rodape__aviso a { font-weight: var(--peso-forte); }
+.rodape__fim {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--esp-2) var(--esp-5);
+  margin-top: var(--esp-5);
+  color: var(--cor-salvia);
+}
+@media (min-width: 761px) {
+  .rodape__grade { grid-template-columns: 1fr auto; align-items: end; }
+}
+
+/* ---------- Botão flutuante de WhatsApp (só no celular) ------------------- */
+.flutuante { display: none; }
+@media (max-width: 760px) {
+  .flutuante {
+    position: fixed;
+    right: var(--esp-4);
+    bottom: calc(var(--esp-4) + env(safe-area-inset-bottom, 0px));
+    z-index: 90; /* abaixo do menu (100) */
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--raio-pilula);
+    background: var(--cor-oliva);
+    color: var(--cor-offwhite);
+    box-shadow: var(--sombra-suave);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity var(--dur-rapida), transform var(--dur-media) var(--ease-entrada), visibility 0s linear var(--dur-media);
+  }
+  .flutuante--visivel { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .flutuante:focus-visible { border-radius: var(--raio-pilula); }
+  .flutuante__icone {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
