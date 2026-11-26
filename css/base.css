@@ -248,6 +248,8 @@ small { font-size: var(--fs-pequeno); }
   transform: translateY(-200%);
 }
 .pular-link:focus-visible { transform: none; }
+/* o <main> recebe foco pelo "pular" só para o leitor de tela continuar dali: sem moldura na página toda */
+main:focus { outline: none; }
 
 .visualmente-oculto {
   position: absolute !important;

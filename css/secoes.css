@@ -369,7 +369,12 @@
   border-radius: var(--raio-m);
   background: rgb(248 250 241 / 0.08);
 }
-.rodape__aviso a { font-weight: var(--peso-forte); }
+.rodape__aviso a {
+  display: inline-block;
+  padding: var(--esp-1) var(--esp-2); /* alvo de toque ≥ 24 px sem mudar a linha */
+  margin-block: calc(-1 * var(--esp-1));
+  font-weight: var(--peso-forte);
+}
 .rodape__fim {
   display: flex;
   flex-wrap: wrap;
