@@ -208,7 +208,6 @@
   font-weight: var(--peso-forte);
 }
 .informes li { display: flex; align-items: center; gap: var(--esp-3); }
-.nota-pendente { margin-top: var(--esp-4); }
 @media (min-width: 600px) { .passos { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 1024px) { .passos { grid-template-columns: repeat(4, 1fr); } }
 
